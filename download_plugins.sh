@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Script pour télécharger automatiquement les plugins pour Velocity et Paper
+# Inclut Floodgate pour le support Bedrock
 # Assurez-vous que wget ou curl est installé.
 
 # Couleurs pour les messages
@@ -72,6 +73,11 @@ download_plugin "https://github.com/ImaginaryDevelopment/RedisBungee/releases/do
     "velocity/plugins/redisbungee.jar" \
     "RedisBungee (Velocity)"
 
+# Floodgate (Velocity) - Support Bedrock
+download_plugin "https://ci.opencollab.dev/job/GeyserMC/job/Floodgate/job/master/lastSuccessfulBuild/artifact/bootstrap/velocity/build/libs/floodgate-velocity-2.2.1.jar" \
+    "velocity/plugins/floodgate.jar" \
+    "Floodgate (Velocity)"
+
 # Télécharger les plugins pour le Lobby
 echo -e "\n${BLUE}=== Téléchargement des plugins pour le Lobby ===${NC}\n"
 
@@ -96,4 +102,9 @@ for server in survie creatif minijeux; do
 done
 
 echo -e "\n${GREEN}=== Tous les plugins ont été téléchargés ! ===${NC}\n"
+echo "Pour activer le support Bedrock, assurez-vous que :"
+echo "1. Floodgate est dans velocity/plugins/"
+echo "2. Le port 19132 est ouvert sur votre serveur"
+echo "3. velocity.toml a la configuration Bedrock activée"
+echo ""
 echo "Vous pouvez maintenant lancer les serveurs avec ./start_all.sh"

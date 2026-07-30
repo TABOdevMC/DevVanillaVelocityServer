@@ -1,4 +1,4 @@
-# Configuration de VelocityAuth
+# Configuration de VelocityAuth pour Java et Bedrock
 # Version: 2.0
 
 # Activer ou désactiver le plugin
@@ -13,6 +13,25 @@ mode = "BOTH"
 
 # Serveur de fallback (où les joueurs sont envoyés après l'authentification)
 fallback-server = "lobby"
+
+# Options pour les joueurs Bedrock (Floodgate)
+bedrock {
+    # Activer l'authentification pour les joueurs Bedrock
+    enabled = true
+    
+    # Mode d'authentification pour Bedrock
+    # - NONE: Pas d'authentification (utilise le compte Microsoft)
+    # - REGISTER: Les joueurs Bedrock doivent s'inscrire
+    # - LOGIN: Les joueurs Bedrock doivent se connecter
+    # - BOTH: Les joueurs Bedrock peuvent s'inscrire ou se connecter
+    mode = "LOGIN"
+    
+    # Message pour les joueurs Bedrock qui doivent se connecter
+    login-message = "§cVeuillez vous connecter avec /login <motdepasse>"
+    
+    # Message pour les joueurs Bedrock qui doivent s'inscrire
+    register-message = "§cVeuillez vous inscrire avec /register <motdepasse> <confirmation>"
+}
 
 # Messages
 messages {
@@ -29,6 +48,12 @@ messages {
         failure = "§cCe pseudo est déjà enregistré !"
         password-too-short = "§cLe mot de passe doit contenir au moins 4 caractères !"
         passwords-do-not-match = "§cLes mots de passe ne correspondent pas !"
+    }
+    
+    # Messages pour les joueurs Bedrock
+    bedrock {
+        login-success = "§aConnexion réussie ! Bienvenue, %player% (Bedrock) !"
+        register-success = "§aInscription réussie ! Bienvenue, %player% (Bedrock) !"
     }
     
     # Messages généraux
@@ -51,7 +76,7 @@ database {
         path = "{DIR}/velocityauth"
     }
     
-    # Configuration pour MySQL
+    # Configuration pour MySQL (recommandé pour les grands serveurs)
     # mysql {
     #     host = "127.0.0.1"
     #     port = 3306
@@ -80,6 +105,15 @@ security {
     
     # Durée du ban temporaire (en secondes)
     tempban-duration = 300
+    
+    # Options spécifiques pour Bedrock
+    bedrock {
+        # Empêcher les joueurs Bedrock de se connecter avec un pseudo déjà utilisé par un joueur Java
+        prevent-java-name-conflict = true
+        
+        # Empêcher les joueurs Java de se connecter avec un pseudo déjà utilisé par un joueur Bedrock
+        prevent-bedrock-name-conflict = true
+    }
 }
 
 # Options de session
@@ -102,4 +136,7 @@ logging {
     
     # Activer les logs des erreurs
     log-errors = true
+    
+    # Activer les logs spécifiques pour Bedrock
+    log-bedrock = true
 }

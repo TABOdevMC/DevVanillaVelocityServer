@@ -1,9 +1,9 @@
 # Configuration de RedisBungee pour Velocity
-# Version: 1.0
+# Synchronisation du chat et des données entre Java et Bedrock
 
 # Activer ou désactiver Redis
 redis:
-  enabled: false
+  enabled: true
   
   # Adresse du serveur Redis
   host: "127.0.0.1"
@@ -33,6 +33,33 @@ sync:
   
   # Synchroniser les bans (nécessite AdvancedBan)
   bans: true
+  
+  # Synchroniser les messages de connexion/déconnexion
+  join-leave-messages: true
+
+# Options de chat global
+chat:
+  # Activer le chat global entre tous les serveurs
+  global: true
+  
+  # Format du chat global
+  # Utilisez %server%, %player%, %message%
+  format: "§7[%server%] %prefix%%player%§7: %message%"
+  
+  # Préfixes pour les serveurs
+  server-prefixes:
+    lobby: "§6[Lobby]"
+    survie: "§a[Survie]"
+    creatif: "§b[Créatif]"
+    minijeux: "§c[Mini-Jeux]"
+  
+  # Préfixes pour les types de joueurs
+  player-prefixes:
+    java: "§7[JAVA]"
+    bedrock: "§7[BE]"
+  
+  # Activer les couleurs dans le chat
+  allow-colors: true
 
 # Options de logging
 logging:
@@ -41,3 +68,6 @@ logging:
   
   # Activer les logs des erreurs Redis
   log-errors: true
+  
+  # Activer les logs du chat
+  log-chat: true

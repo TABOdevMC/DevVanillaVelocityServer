@@ -1,9 +1,10 @@
 # Configuration principale de Velocity
 # Version: 3.3.0-SNAPSHOT (compatible avec Minecraft 1.20.4/1.20.5/1.20.6)
+# Prend en charge les joueurs Java (port 25577) et Bedrock (port 19132)
 
-# Configuration du serveur
+# Configuration du serveur pour Java
 bind = "0.0.0.0:25577"
-motd = "§6DevVanilla §8| §eVelocity Proxy"
+motd = "§6DevVanilla §8| §eVelocity Proxy (Java + Bedrock)"
 show_max_players = 100
 online_mode = true
 
@@ -40,3 +41,11 @@ resource_pack_enabled = false
 
 # Configuration des limites
 max_players_per_server = 50
+
+# Configuration pour Floodgate (Bedrock)
+# Floodgate permet aux joueurs Bedrock de rejoindre le serveur Java
+# Port pour les joueurs Bedrock (19132 par défaut)
+bedrock:
+  enabled: true
+  port: 19132
+  motd: "§6DevVanilla §8| §eRejoignez depuis Bedrock !"

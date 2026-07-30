@@ -1,5 +1,6 @@
 @echo off
 :: Script pour télécharger automatiquement les plugins pour Velocity et Paper sous Windows
+:: Inclut Floodgate pour le support Bedrock
 :: Assurez-vous que PowerShell est disponible (Windows 7+).
 
 :: Couleurs pour les messages
@@ -52,6 +53,9 @@ call :DownloadPlugin "https://github.com/Patbox/VelocityAuth/releases/download/2
 :: RedisBungee (Velocity)
 call :DownloadPlugin "https://github.com/ImaginaryDevelopment/RedisBungee/releases/download/1.0.0/RedisBungee-1.0.0.jar" "velocity\plugins\redisbungee.jar" "RedisBungee (Velocity)"
 
+:: Floodgate (Velocity) - Support Bedrock
+call :DownloadPlugin "https://ci.opencollab.dev/job/GeyserMC/job/Floodgate/job/master/lastSuccessfulBuild/artifact/bootstrap/velocity/build/libs/floodgate-velocity-2.2.1.jar" "velocity\plugins\floodgate.jar" "Floodgate (Velocity)"
+
 :: Télécharger les plugins pour le Lobby
 call :ColorText 0x09 "\n=== Téléchargement des plugins pour le Lobby ==="
 echo.
@@ -72,6 +76,10 @@ for %%s in (survie creatif minijeux) do (
 )
 
 call :ColorText 0x0A "\n=== Tous les plugins ont été téléchargés ! ==="
+echo.
+echo Pour activer le support Bedrock, assurez-vous que :
+echo 1. Floodgate est dans velocity\plugins\necho 2. Le port 19132 est ouvert sur votre serveur
+echo 3. velocity.toml a la configuration Bedrock activée
 echo.
 echo Vous pouvez maintenant lancer les serveurs avec start_all.bat
 pause

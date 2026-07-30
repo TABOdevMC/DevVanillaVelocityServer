@@ -1,0 +1,76 @@
+# Configuration de Floodgate pour Velocity
+# Permet aux joueurs Bedrock de rejoindre le serveur Java
+
+# Activer ou désactiver Floodgate
+enabled: true
+
+# Mode de connexion
+# - ONLINE: Les joueurs Bedrock doivent se connecter avec un compte Microsoft (recommandé)
+# - OFFLINE: Les joueurs Bedrock peuvent utiliser n'importe quel pseudo (non sécurisé)
+# - HYBRID: Les deux modes sont autorisés
+mode: ONLINE
+
+# Port pour les joueurs Bedrock (par défaut: 19132)
+bedrock-port: 19132
+
+# Adresse IP pour les joueurs Bedrock (0.0.0.0 pour toutes les interfaces)
+bedrock-bind: "0.0.0.0"
+
+# Message de bienvenue pour les joueurs Bedrock
+welcome-message: "§aBienvenue, %player% ! Vous jouez depuis Bedrock."
+
+# Préfixe pour les joueurs Bedrock dans le chat
+bedrock-prefix: "§7[BE] "
+
+# Suffix pour les joueurs Bedrock dans le chat
+bedrock-suffix: ""
+
+# Cacher le préfixe/suffix dans la tablist
+hide-prefix-in-tab: false
+
+# Permettre aux joueurs Bedrock d'utiliser des commandes Java
+allow-bedrock-commands: true
+
+# Permettre aux joueurs Java d'utiliser des commandes Bedrock
+allow-java-commands: false
+
+# Synchroniser le chat entre Java et Bedrock
+sync-chat: true
+
+# Format du chat pour les joueurs Bedrock
+# Utilisez %prefix%, %name%, %message%
+bedrock-chat-format: "§7%prefix%%name%§7: %message%"
+
+# Format du chat pour les joueurs Java
+# Utilisez %prefix%, %name%, %message%
+java-chat-format: "§7%prefix%%name%§7: %message%"
+
+# Activer les messages de debug
+debug: false
+
+# Options de sécurité
+security:
+  # Empêcher les joueurs Bedrock de se faire passer pour des joueurs Java
+  prevent-spoofing: true
+  
+  # Vérifier les signatures des paquets Bedrock
+  verify-packets: true
+
+# Options de performance
+performance:
+  # Nombre maximal de joueurs Bedrock
+  max-bedrock-players: 100
+  
+  # Timeout de connexion (en secondes)
+  connection-timeout: 30
+
+# Options de logging
+logging:
+  # Activer les logs des connexions Bedrock
+  log-connections: true
+  
+  # Activer les logs des déconnexions Bedrock
+  log-disconnections: true
+  
+  # Activer les logs des erreurs
+  log-errors: true
