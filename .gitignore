@@ -25,12 +25,10 @@ crash-*/
 # Fichiers de debug
 debug/
 
-# Fichiers de plugins (sauf configuration)
-*/plugins/*.jar
-!*/plugins/*.yml
-!*/plugins/*.json
-!*/plugins/*.toml
-!*/plugins/*.conf
+# Fichiers de base de données (H2, SQLite, etc.)
+*.h2
+*.db
+*.mdb
 
 # Fichiers de screen (si utilisés)
 *.screen
@@ -40,8 +38,3 @@ debug/
 
 # Fichiers de temporaires
 *.tmp
-
-# Fichiers de base de données (H2, SQLite, etc.)
-*.h2
-*.db
-*.mdb

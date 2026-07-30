@@ -760,6 +760,153 @@ start_all.bat
 | **Les modérateurs ne voient pas les bans** | Vérifiez les permissions (`advancedban.ban`, `advancedban.tempban`). |
 
 ---
+n---
+
+## u26a1 Anti-Cheat
+
+Ce projet inclut **deux anti-cheats** pour une protection maximale :
+
+| Anti-Cheat | Type | Description |
+|------------|------|-------------|
+| **NoCheatPlus** | Paper | Anti-cheat open-source pour les serveurs (fly, speed, kill aura, etc.) |
+| **Vulcan** | Velocity | Anti-cheat moderne pour le proxy (paquets illégaux, connexions rapides, etc.) |
+
+> **u2705 Conseil** : Utilisez **les deux** pour une protection optimale ! Voir [ANTI_CHEAT.md](ANTI_CHEAT.md) pour la configuration détaillée.
+
+n---
+
+## 🛡️ Anti-Cheat
+
+### **NoCheatPlus (Paper)**
+NoCheatPlus est un **anti-cheat open-source** pour les serveurs Paper. Il détecte les triches comme le fly, le speed, le kill aura, etc.
+
+#### **Configuration**
+- **Fichiers** : 
+  - `servers/lobby/plugins/nocheatplus/config.yml`
+  - `servers/survie/plugins/nocheatplus/config.yml`
+  - `servers/creatif/plugins/nocheatplus/config.yml`
+  - `servers/minijeux/plugins/nocheatplus/config.yml`
+
+**Exemple de configuration (Survie - stricte)** :
+```yaml
+detection:
+  movement:
+    fly:
+      enabled: true
+      max-violations: 3
+      ban-duration: 3600  # Ban de 1 heure
+      message: "§cFly détecté !"
+    speed:
+      enabled: true
+      max-violations: 3
+      message: "§cSpeed détecté !"
+  combat:
+    kill-aura:
+      enabled: true
+      max-cps: 15
+      max-violations: 3
+      message: "§cKill Aura détecté !"
+    reach:
+      enabled: true
+      max-reach: 3.2
+      max-violations: 3
+      message: "§cReach trop long !"
+
+punishments:
+  default-type: BAN
+  default-ban-duration: 3600
+```
+
+**Commandes utiles** :
+```bash
+/ncp reload              # Recharger la configuration
+/ncp check <joueur>     # Vérifier un joueur
+/ncp bypass <joueur>    # Ajouter un joueur à la liste de bypass
+```
+
+---
+
+### **Vulcan (Velocity)**
+Vulcan est un **anti-cheat moderne** qui fonctionne au niveau du proxy (Velocity).
+
+#### **Configuration**
+- **Fichier** : `velocity/plugins/vulcan/config.yml`
+
+**Exemple de configuration** :
+```yaml
+detection:
+  movement:
+    fly:
+      enabled: true
+      sensitivity: 7  # 1-10 (10 = très sensible)
+      max-violations: 5
+      punishment: KICK
+      message: "§cFly détecté par Vulcan !"
+    speed:
+      enabled: true
+      sensitivity: 7
+      max-violations: 5
+      message: "§cSpeed détecté par Vulcan !"
+  combat:
+    kill-aura:
+      enabled: true
+      sensitivity: 7
+      max-cps: 20
+      max-violations: 5
+      message: "§cKill Aura détecté par Vulcan !"
+
+punishments:
+  default-type: KICK
+  default-ban-duration: 3600
+
+notifications:
+  notify-on-violation: true
+  notify-permission: "vulcan.notify"
+
+bypass:
+  allow-bypass: true
+  bypass-permission: "vulcan.bypass"
+```
+
+**Commandes utiles** :
+```bash
+/vulcan reload          # Recharger la configuration
+/vulcan check <joueur>  # Vérifier un joueur
+```
+
+---
+
+### **Comparaison NoCheatPlus vs Vulcan**
+
+| Fonctionnalité | NoCheatPlus | Vulcan |
+|---------------|-------------|--------|
+| **Niveau** | Paper (serveur) | Velocity (proxy) |
+| **Détection du fly** | ✅ Oui | ✅ Oui |
+| **Détection du speed** | ✅ Oui | ✅ Oui |
+| **Détection du kill aura** | ✅ Oui | ✅ Oui |
+| **Détection des paquets illégaux** | ❌ Non | ✅ Oui |
+| **Détection des connexions rapides** | ❌ Non | ✅ Oui |
+| **Configuration par serveur** | ✅ Oui | ❌ Non (global) |
+| **Recommandé pour** | Survie, Créatif, Mini-Jeux | Velocity (tous les serveurs) |
+
+> **Conseil** : Utilisez **les deux** pour une protection maximale !
+
+---
+
+## 📦 Liste complète des plugins
+
+| Plugin | Type | Description | Anti-Cheat |
+|--------|------|-------------|------------|
+| **LuckPerms** | Velocity + Paper | Gestion globale des permissions | ❌ Non |
+| **TabList** | Velocity | Tablist personnalisée | ❌ Non |
+| **AdvancedBan** | Velocity | Bans inter-serveurs | ❌ Non |
+| **VelocityAuth** | Velocity | Authentification unifiée (`/login`) | ❌ Non |
+| **RedisBungee** | Velocity | Synchronisation des données | ❌ Non |
+| **Floodgate** | Velocity | Support Bedrock (mode OFFLINE) | ❌ Non |
+| **GeyserMC** | Velocity | Alternative à Floodgate | ❌ Non |
+| **Vulcan** | Velocity | Anti-cheat (proxy) | ✅ **Oui** |
+| **NoCheatPlus** | Paper | Anti-cheat (serveur) | ✅ **Oui** |
+| **EssentialsX** | Paper (Lobby) | Commandes de base | ❌ Non |
 
 ## 🔗 Liens utiles
 

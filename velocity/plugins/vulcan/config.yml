@@ -1,0 +1,176 @@
+# Configuration de Vulcan pour Velocity
+# Anti-cheat moderne pour détecter les triches au niveau du proxy
+
+# Activer ou désactiver Vulcan
+enabled: true
+
+# Options générales
+general:
+  # Langue des messages
+  locale: en_US
+  
+  # Activer les logs
+  logging: true
+  
+  # Niveau de log (DEBUG, INFO, WARN, ERROR)
+  log-level: INFO
+
+# Options de détection
+detection:
+  # Activer la détection des mouvements
+  movement:
+    enabled: true
+    
+    # Détection du fly
+    fly:
+      enabled: true
+      
+      # Sensibilité (1-10, 10 = très sensible)
+      sensitivity: 7
+      
+      # Nombre de violations avant punition
+      max-violations: 5
+      
+      # Type de punition (KICK, BAN, WARNING)
+      punishment: KICK
+      
+      # Durée du ban (en secondes, 0 = kick)
+      ban-duration: 0
+      
+      # Message de punition
+      message: "§cFly détecté par Vulcan !"
+    
+    # Détection du speed
+    speed:
+      enabled: true
+      sensitivity: 7
+      max-violations: 5
+      punishment: KICK
+      message: "§cSpeed détecté par Vulcan !"
+    
+    # Détection du sprint fly
+    sprint-fly:
+      enabled: true
+      sensitivity: 7
+      max-violations: 5
+      message: "§cSprint Fly détecté par Vulcan !"
+    
+    # Détection du nofall
+    nofall:
+      enabled: true
+      sensitivity: 7
+      max-violations: 5
+      message: "§cNoFall détecté par Vulcan !"
+
+  # Activer la détection des combats
+  combat:
+    enabled: true
+    
+    # Détection du kill aura
+    kill-aura:
+      enabled: true
+      sensitivity: 7
+      max-cps: 20
+      max-violations: 5
+      punishment: KICK
+      message: "§cKill Aura détecté par Vulcan !"
+    
+    # Détection du reach
+    reach:
+      enabled: true
+      sensitivity: 7
+      max-reach: 3.5
+      max-violations: 5
+      message: "§cReach trop long détecté par Vulcan !"
+    
+    # Détection des criticals
+    criticals:
+      enabled: true
+      sensitivity: 7
+      max-violations: 5
+      message: "§cCriticals illégaux détectés par Vulcan !"
+
+  # Activer la détection des paquets
+  packets:
+    enabled: true
+    
+    # Détection des paquets illégaux
+    illegal-packets:
+      enabled: true
+      max-violations: 3
+      punishment: BAN
+      ban-duration: 3600
+      message: "§cPaquets illégaux détectés par Vulcan !"
+    
+    # Détection du spam de paquets
+    packet-spam:
+      enabled: true
+      max-packets-per-second: 100
+      max-violations: 5
+      punishment: KICK
+      message: "§cSpam de paquets détecté par Vulcan !"
+
+  # Activer la détection des connexions
+  connection:
+    enabled: true
+    
+    # Détection des connexions trop rapides
+    fast-connect:
+      enabled: true
+      max-connections-per-minute: 10
+      max-violations: 3
+      punishment: BAN
+      ban-duration: 3600
+      message: "§cConnexions trop rapides détectées par Vulcan !"
+
+# Options de punition
+punishments:
+  # Type de punition par défaut
+  default-type: KICK
+  
+  # Durée du ban par défaut (en secondes)
+  default-ban-duration: 3600
+  
+  # Message de kick par défaut
+  default-kick-message: "§cTriche détectée par Vulcan !"
+  
+  # Message de ban par défaut
+  default-ban-message: "§cBanni pour triche par Vulcan !"
+
+# Options de notification
+notifications:
+  # Notifier les modérateurs des violations
+  notify-on-violation: true
+  
+  # Notifier les modérateurs des bans
+  notify-on-ban: true
+  
+  # Notifier les modérateurs des kicks
+  notify-on-kick: true
+  
+  # Permission pour recevoir les notifications
+  notify-permission: "vulcan.notify"
+
+# Options de bypass
+bypass:
+  # Permettre aux joueurs avec la permission de bypasser Vulcan
+  allow-bypass: true
+  
+  # Permission pour bypasser
+  bypass-permission: "vulcan.bypass"
+
+# Options de performance
+performance:
+  # Activer le cache des données des joueurs
+  cache-enabled: true
+  
+  # Durée de vie du cache (en secondes)
+  cache-lifetime: 300
+
+# Options de compatibilité
+compatibility:
+  # Activer la compatibilité avec Floodgate/GeyserMC (Bedrock)
+  allow-bedrock: true
+  
+  # Activer la compatibilité avec les serveurs en mode OFFLINE (CRACK)
+  allow-offline-mode: true

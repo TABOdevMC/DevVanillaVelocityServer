@@ -1,0 +1,122 @@
+# Configuration de NoCheatPlus pour le serveur Créatif
+# Version: 3.16.1
+# Moins stricte que Survie (les joueurs ont plus de libertés en créatif)
+
+# Activer ou désactiver NoCheatPlus
+enabled: true
+
+# Options générales
+general:
+  locale: fr_FR
+  logging: true
+  log-level: INFO
+
+# Options de compatibilité
+compatibility:
+  allow-offline-mode: true
+  allow-bedrock: true
+
+# Options de détection (moins strictes pour Créatif)
+detection:
+  movement:
+    enabled: true
+    
+    fly:
+      enabled: false  # Désactivé en créatif (les joueurs peuvent voler)
+    
+    speed:
+      enabled: true
+      max-violations: 10  # Plus tolérant
+      message: "§cSpeed détecté ! (Créatif)"
+    
+    sprint-fly:
+      enabled: false  # Désactivé en créatif
+    
+    step:
+      enabled: true
+      max-height: 1.0  # Plus tolérant
+      max-violations: 5
+      message: "§cStep trop haut ! (Créatif)"
+    
+    nofall:
+      enabled: false  # Désactivé en créatif
+
+  combat:
+    enabled: true
+    
+    kill-aura:
+      enabled: true
+      max-cps: 25  # Plus tolérant
+      max-violations: 10
+      message: "§cKill Aura détecté ! (Créatif)"
+    
+    reach:
+      enabled: true
+      max-reach: 4.0  # Plus tolérant
+      max-violations: 10
+      message: "§cReach trop long ! (Créatif)"
+    
+    criticals:
+      enabled: false  # Désactivé en créatif
+
+  block:
+    enabled: true
+    
+    block-reach:
+      enabled: true
+      max-reach: 5.0  # Plus tolérant
+      max-violations: 10
+      message: "§cBlock Reach trop long ! (Créatif)"
+    
+    fast-place:
+      enabled: true
+      max-violations: 10
+      message: "§cFast Place détecté ! (Créatif)"
+    
+    fast-break:
+      enabled: true
+      max-violations: 10
+      message: "§cFast Break détecté ! (Créatif)"
+
+  inventory:
+    enabled: true
+    
+    fast-consume:
+      enabled: true
+      max-violations: 10
+      message: "§cFast Consume détecté ! (Créatif)"
+    
+    fast-bow:
+      enabled: true
+      max-violations: 10
+      message: "§cFast Bow détecté ! (Créatif)"
+
+  potions:
+    enabled: true
+    
+    illegal-potions:
+      enabled: true
+      message: "§cPotions illégales détectées ! (Créatif)"
+
+# Options de punition (moins strictes pour Créatif)
+punishments:
+  default-type: KICK
+  default-ban-duration: 0  # Pas de ban par défaut
+  default-kick-message: "§cTriche détectée ! (Créatif)"
+  default-ban-message: "§cBanni pour triche ! (Créatif)"
+
+# Options de notification
+notifications:
+  notify-on-violation: true
+  notify-on-ban: true
+  notify-on-kick: true
+
+# Options de bypass
+bypass:
+  allow-bypass: true
+  bypass-permission: "nocheatplus.bypass"
+
+# Options de performance
+performance:
+  cache-enabled: true
+  cache-lifetime: 300

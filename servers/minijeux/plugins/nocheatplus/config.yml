@@ -1,0 +1,126 @@
+# Configuration de NoCheatPlus pour le serveur Mini-Jeux
+# Version: 3.16.1
+# Configuration adaptée aux mini-jeux (PvP, Parkour, etc.)
+
+# Activer ou désactiver NoCheatPlus
+enabled: true
+
+# Options générales
+general:
+  locale: fr_FR
+  logging: true
+  log-level: INFO
+
+# Options de compatibilité
+compatibility:
+  allow-offline-mode: true
+  allow-bedrock: true
+
+# Options de détection (adaptées aux mini-jeux)
+detection:
+  movement:
+    enabled: true
+    
+    fly:
+      enabled: true
+      max-violations: 5
+      message: "§cFly détecté ! (Mini-Jeux)"
+    
+    speed:
+      enabled: true
+      max-violations: 5
+      message: "§cSpeed détecté ! (Mini-Jeux)"
+    
+    sprint-fly:
+      enabled: true
+      max-violations: 5
+      message: "§cSprint Fly détecté ! (Mini-Jeux)"
+    
+    step:
+      enabled: true
+      max-height: 1.0  # Adapté aux sauts en PvP
+      max-violations: 3
+      message: "§cStep trop haut ! (Mini-Jeux)"
+    
+    nofall:
+      enabled: false  # Désactivé pour les mini-jeux (ex: parkour)
+
+  combat:
+    enabled: true
+    
+    kill-aura:
+      enabled: true
+      max-cps: 18  # Adapté au PvP
+      max-violations: 5
+      message: "§cKill Aura détecté ! (Mini-Jeux)"
+    
+    reach:
+      enabled: true
+      max-reach: 3.5  # Adapté au PvP
+      max-violations: 5
+      message: "§cReach trop long ! (Mini-Jeux)"
+    
+    criticals:
+      enabled: false  # Désactivé pour les mini-jeux (les critiques sont souvent autorisés)
+
+  block:
+    enabled: true
+    
+    block-reach:
+      enabled: true
+      max-reach: 4.0
+      max-violations: 5
+      message: "§cBlock Reach trop long ! (Mini-Jeux)"
+    
+    fast-place:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Place détecté ! (Mini-Jeux)"
+    
+    fast-break:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Break détecté ! (Mini-Jeux)"
+
+  inventory:
+    enabled: true
+    
+    fast-consume:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Consume détecté ! (Mini-Jeux)"
+    
+    fast-bow:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Bow détecté ! (Mini-Jeux)"
+
+  potions:
+    enabled: true
+    
+    illegal-potions:
+      enabled: true
+      message: "§cPotions illégales détectées ! (Mini-Jeux)"
+
+# Options de punition
+punishments:
+  default-type: KICK
+  default-ban-duration: 1800  # Ban de 30 minutes
+  default-kick-message: "§cTriche détectée ! (Mini-Jeux)"
+  default-ban-message: "§cBanni pour triche ! (Mini-Jeux)"
+
+# Options de notification
+notifications:
+  notify-on-violation: true
+  notify-on-ban: true
+  notify-on-kick: true
+
+# Options de bypass
+bypass:
+  allow-bypass: true
+  bypass-permission: "nocheatplus.bypass"
+
+# Options de performance
+performance:
+  cache-enabled: true
+  cache-lifetime: 300

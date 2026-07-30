@@ -1,0 +1,198 @@
+# Configuration de NoCheatPlus pour le Lobby
+# Version: 3.16.1
+
+# Activer ou désactiver NoCheatPlus
+enabled: true
+
+# Options générales
+general:
+  # Langue des messages
+  locale: fr_FR
+  
+  # Activer les logs
+  logging: true
+  
+  # Niveau de log (DEBUG, INFO, WARN, ERROR)
+  log-level: INFO
+
+# Options de compatibilité
+compatibility:
+  # Activer la compatibilité avec les serveurs en mode OFFLINE (CRACK)
+  allow-offline-mode: true
+  
+  # Activer la compatibilité avec Floodgate/GeyserMC (Bedrock)
+  allow-bedrock: true
+
+# Options de détection
+detection:
+  # Activer la détection des mouvements
+  movement:
+    enabled: true
+    
+    # Détection du fly
+    fly:
+      enabled: true
+      
+      # Nombre de violations avant ban
+      max-violations: 5
+      
+      # Durée du ban (en secondes, 0 = kick)
+      ban-duration: 0
+      
+      # Message de kick/ban
+      message: "§cFly détecté !"
+    
+    # Détection du speed
+    speed:
+      enabled: true
+      max-violations: 5
+      ban-duration: 0
+      message: "§cSpeed détecté !"
+    
+    # Détection du sprint fly
+    sprint-fly:
+      enabled: true
+      max-violations: 5
+      message: "§cSprint Fly détecté !"
+    
+    # Détection du step
+    step:
+      enabled: true
+      max-height: 0.6
+      max-violations: 3
+      message: "§cStep trop haut !"
+    
+    # Détection du nofall
+    nofall:
+      enabled: true
+      max-violations: 5
+      message: "§cNoFall détecté !"
+
+  # Activer la détection des combats
+  combat:
+    enabled: true
+    
+    # Détection du kill aura
+    kill-aura:
+      enabled: true
+      max-cps: 20
+      max-violations: 5
+      message: "§cKill Aura détecté !"
+    
+    # Détection du reach
+    reach:
+      enabled: true
+      max-reach: 3.5
+      max-violations: 5
+      message: "§cReach trop long !"
+    
+    # Détection du criticals
+    criticals:
+      enabled: true
+      max-violations: 5
+      message: "§cCriticals illégaux !"
+
+  # Activer la détection des blocs
+  block:
+    enabled: true
+    
+    # Détection du block reach
+    block-reach:
+      enabled: true
+      max-reach: 4.0
+      max-violations: 5
+      message: "§cBlock Reach trop long !"
+    
+    # Détection du block speed
+    block-speed:
+      enabled: true
+      max-violations: 5
+      message: "§cBlock Speed détecté !"
+    
+    # Détection du fast place
+    fast-place:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Place détecté !"
+    
+    # Détection du fast break
+    fast-break:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Break détecté !"
+
+  # Activer la détection des inventaires
+  inventory:
+    enabled: true
+    
+    # Détection du fast consume
+    fast-consume:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Consume détecté !"
+    
+    # Détection du fast bow
+    fast-bow:
+      enabled: true
+      max-violations: 5
+      message: "§cFast Bow détecté !"
+
+  # Activer la détection des potions
+  potions:
+    enabled: true
+    
+    # Détection des potions illégales
+    illegal-potions:
+      enabled: true
+      message: "§cPotions illégales détectées !"
+
+  # Activer la détection des entités
+  entities:
+    enabled: true
+    
+    # Détection du ride
+    ride:
+      enabled: true
+      max-violations: 5
+      message: "§cRide illégal détecté !"
+
+# Options de punition
+punishments:
+  # Type de punition par défaut (KICK, BAN, WARNING)
+  default-type: KICK
+  
+  # Durée du ban par défaut (en secondes)
+  default-ban-duration: 3600
+  
+  # Message de kick par défaut
+  default-kick-message: "§cTriche détectée !"
+  
+  # Message de ban par défaut
+  default-ban-message: "§cBanni pour triche !"
+
+# Options de notification
+notifications:
+  # Notifier les modérateurs des violations
+  notify-on-violation: true
+  
+  # Notifier les modérateurs des bans
+  notify-on-ban: true
+  
+  # Notifier les modérateurs des kicks
+  notify-on-kick: true
+
+# Options de bypass
+bypass:
+  # Permettre aux joueurs avec la permission de bypasser NoCheatPlus
+  allow-bypass: true
+  
+  # Permission pour bypasser
+  bypass-permission: "nocheatplus.bypass"
+
+# Options de performance
+performance:
+  # Activer le cache des données des joueurs
+  cache-enabled: true
+  
+  # Durée de vie du cache (en secondes)
+  cache-lifetime: 300

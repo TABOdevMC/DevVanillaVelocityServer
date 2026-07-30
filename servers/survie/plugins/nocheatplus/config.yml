@@ -1,0 +1,132 @@
+# Configuration de NoCheatPlus pour le serveur Survie
+# Version: 3.16.1
+# Plus stricte que le Lobby pour éviter les triches en survie
+
+# Activer ou désactiver NoCheatPlus
+enabled: true
+
+# Options générales
+general:
+  locale: fr_FR
+  logging: true
+  log-level: INFO
+
+# Options de compatibilité
+compatibility:
+  allow-offline-mode: true
+  allow-bedrock: true
+
+# Options de détection (plus strictes pour Survie)
+detection:
+  movement:
+    enabled: true
+    
+    fly:
+      enabled: true
+      max-violations: 3  # Moins tolérant en survie
+      ban-duration: 3600  # Ban de 1 heure
+      message: "§cFly détecté ! (Survie)"
+    
+    speed:
+      enabled: true
+      max-violations: 3
+      ban-duration: 3600
+      message: "§cSpeed détecté ! (Survie)"
+    
+    sprint-fly:
+      enabled: true
+      max-violations: 3
+      message: "§cSprint Fly détecté ! (Survie)"
+    
+    step:
+      enabled: true
+      max-height: 0.5  # Plus strict
+      max-violations: 2
+      message: "§cStep trop haut ! (Survie)"
+    
+    nofall:
+      enabled: true
+      max-violations: 3
+      message: "§cNoFall détecté ! (Survie)"
+
+  combat:
+    enabled: true
+    
+    kill-aura:
+      enabled: true
+      max-cps: 15  # Plus strict
+      max-violations: 3
+      message: "§cKill Aura détecté ! (Survie)"
+    
+    reach:
+      enabled: true
+      max-reach: 3.2  # Plus strict
+      max-violations: 3
+      message: "§cReach trop long ! (Survie)"
+    
+    criticals:
+      enabled: true
+      max-violations: 3
+      message: "§cCriticals illégaux ! (Survie)"
+
+  block:
+    enabled: true
+    
+    block-reach:
+      enabled: true
+      max-reach: 3.5  # Plus strict
+      max-violations: 3
+      message: "§cBlock Reach trop long ! (Survie)"
+    
+    fast-place:
+      enabled: true
+      max-violations: 3
+      message: "§cFast Place détecté ! (Survie)"
+    
+    fast-break:
+      enabled: true
+      max-violations: 3
+      message: "§cFast Break détecté ! (Survie)"
+
+  inventory:
+    enabled: true
+    
+    fast-consume:
+      enabled: true
+      max-violations: 3
+      message: "§cFast Consume détecté ! (Survie)"
+    
+    fast-bow:
+      enabled: true
+      max-violations: 3
+      message: "§cFast Bow détecté ! (Survie)"
+
+  potions:
+    enabled: true
+    
+    illegal-potions:
+      enabled: true
+      message: "§cPotions illégales détectées ! (Survie)"
+
+# Options de punition (plus strictes pour Survie)
+punishments:
+  default-type: BAN
+  default-ban-duration: 3600  # Ban de 1 heure
+  default-kick-message: "§cTriche détectée ! (Survie)"
+  default-ban-message: "§cBanni pour triche ! (Survie)"
+
+# Options de notification
+notifications:
+  notify-on-violation: true
+  notify-on-ban: true
+  notify-on-kick: true
+
+# Options de bypass
+bypass:
+  allow-bypass: true
+  bypass-permission: "nocheatplus.bypass"
+
+# Options de performance
+performance:
+  cache-enabled: true
+  cache-lifetime: 300
