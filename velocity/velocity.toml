@@ -1,0 +1,39 @@
+# Configuration principale de Velocity
+# Version: 3.3.0-SNAPSHOT (compatible avec Minecraft 1.20.4/1.20.5/1.20.6)
+
+# Configuration du serveur
+bind = "0.0.0.0:25577"
+motd = "§6DevVanilla §8| §eVelocity Proxy"
+show_max_players = 100
+online_mode = true
+
+# Configuration des joueurs
+player_info_forwarding_mode = "LEGACY"
+forward_legacy_ping = true
+
+# Configuration des serveurs backend
+servers = ["survie", "creatif", "minijeux"]
+
+# Configuration des logs
+log_level = "INFO"
+log_chat_to_console = true
+
+# Configuration de la sécurité
+prevent_client_proxy_connections = false
+
+# Configuration des timeouts (en millisecondes)
+read_timeout = 30000
+connect_timeout = 5000
+login_timeout = 30000
+
+# Configuration des proxy
+proxy_protocol = false
+
+# Configuration des messages
+force_key_authentication = false
+
+# Configuration des ressources
+resource_pack_enabled = false
+
+# Configuration des limites
+max_players_per_server = 50

@@ -1,0 +1,35 @@
+# Configuration de Paper pour le serveur Mini-Jeux
+# Version: 1.20.6
+
+# Optimisations des performances
+per-player-mob-spawns: true
+mob-spawn-range: 4
+entity-activation-range:
+  animals: 16
+  monsters: 24
+  raiders: 48
+  misc: 8
+  water: 8
+  village: 16
+  tick-inactive-villagers: false
+
+# Optimisations des chunks
+delay-chunk-unloads-by: 10s
+max-concurrent-chunk-loads: 200
+max-concurrent-chunk-saves: 4
+
+# Optimisations des entités
+fix-climbing-bypassing-cramming-rule: true
+prevent-moving-into-unloaded-chunks: true
+
+# Optimisations des redstones
+lag-compensate-block-updates: true
+
+# Optimisations des joueurs
+max-player-auto-save-per-tick: 4
+
+# Configuration du monde
+disable-end-credits: false
+
+# Configuration des logs
+log-player-ip-addresses: true

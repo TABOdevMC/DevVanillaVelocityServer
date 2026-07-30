@@ -1,0 +1,42 @@
+# Fichiers temporaires et logs
+*.log
+logs/
+
+# Mondes Minecraft
+*/world/
+*/world_*/
+*/nether/
+*/the_end/
+
+# Fichiers de session et cache
+*.jar
+cache/
+
+# Fichiers de configuration locale
+*.yml.local
+*.properties.local
+
+# Fichiers de sauvegarde
+*.backup
+backups/
+
+# Fichiers de crash
+crash-*/
+
+# Fichiers de debug
+debug/
+
+# Fichiers de plugins (sauf configuration)
+*/plugins/*
+!*/plugins/*.yml
+!*/plugins/*.json
+!*/plugins/*.toml
+
+# Fichiers de screen (si utilisés)
+*.screen
+
+# Fichiers de PID
+*.pid
+
+# Fichiers de temporaires
+*.tmp

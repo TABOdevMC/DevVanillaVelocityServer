@@ -1,0 +1,20 @@
+{
+  "survie": {
+    "address": "127.0.0.1:25565",
+    "motd": "§aMode Survie",
+    "restricted": false,
+    "maintenance": false
+  },
+  "creatif": {
+    "address": "127.0.0.1:25566",
+    "motd": "§bMode Créatif",
+    "restricted": false,
+    "maintenance": false
+  },
+  "minijeux": {
+    "address": "127.0.0.1:25567",
+    "motd": "§cMini-Jeux",
+    "restricted": false,
+    "maintenance": false
+  }
+}

@@ -1,0 +1,3 @@
+# EULA pour Minecraft
+# Pour accepter l'EULA, changez la ligne suivante en "eula=true"
+eula=false
