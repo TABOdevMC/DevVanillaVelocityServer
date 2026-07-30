@@ -1,14 +1,16 @@
 # Configuration de Floodgate pour Velocity
-# Permet aux joueurs Bedrock de rejoindre le serveur Java
+# Permet aux joueurs Bedrock de rejoindre le serveur Java (CRACK)
+# Fonctionne avec GeyserMC pour une meilleure intégration
 
 # Activer ou désactiver Floodgate
 enabled: true
 
 # Mode de connexion
-# - ONLINE: Les joueurs Bedrock doivent se connecter avec un compte Microsoft (recommandé)
-# - OFFLINE: Les joueurs Bedrock peuvent utiliser n'importe quel pseudo (non sécurisé)
+# - ONLINE: Les joueurs Bedrock doivent se connecter avec un compte Microsoft (recommandé pour les serveurs premium)
+# - OFFLINE: Les joueurs Bedrock peuvent utiliser n'importe quel pseudo (pour les serveurs CRACK)
 # - HYBRID: Les deux modes sont autorisés
-mode: ONLINE
+# Pour un serveur CRACK, utilisez OFFLINE ou HYBRID
+mode: OFFLINE
 
 # Port pour les joueurs Bedrock (par défaut: 19132)
 bedrock-port: 19132
@@ -63,6 +65,14 @@ performance:
   
   # Timeout de connexion (en secondes)
   connection-timeout: 30
+
+# Options de compatibilité avec GeyserMC
+geyser:
+  # Activer la compatibilité avec GeyserMC
+  enabled: true
+  
+  # Utiliser GeyserMC pour la conversion des paquets
+  use-geyser: true
 
 # Options de logging
 logging:

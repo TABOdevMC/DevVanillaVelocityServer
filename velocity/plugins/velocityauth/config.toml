@@ -1,4 +1,4 @@
-# Configuration de VelocityAuth pour Java et Bedrock
+# Configuration de VelocityAuth pour un serveur CRACK (Java + Bedrock)
 # Version: 2.0
 
 # Activer ou désactiver le plugin
@@ -9,12 +9,32 @@ enabled = true
 # - REGISTER: Les joueurs doivent s'inscrire
 # - LOGIN: Les joueurs doivent se connecter (inscription désactivée)
 # - BOTH: Les joueurs peuvent s'inscrire ou se connecter
+# Pour un serveur CRACK, utilisez BOTH ou LOGIN
 mode = "BOTH"
 
 # Serveur de fallback (où les joueurs sont envoyés après l'authentification)
 fallback-server = "lobby"
 
-# Options pour les joueurs Bedrock (Floodgate)
+# Options pour les joueurs Java (CRACK)
+java {
+    # Activer l'authentification pour les joueurs Java
+    enabled = true
+    
+    # Mode d'authentification pour Java
+    # - NONE: Pas d'authentification (les joueurs sont directement connectés)
+    # - REGISTER: Les joueurs doivent s'inscrire
+    # - LOGIN: Les joueurs doivent se connecter
+    # - BOTH: Les joueurs peuvent s'inscrire ou se connecter
+    mode = "BOTH"
+    
+    # Message pour les joueurs Java qui doivent se connecter
+    login-message = "§cVeuillez vous connecter avec /login <motdepasse>"
+    
+    # Message pour les joueurs Java qui doivent s'inscrire
+    register-message = "§cVeuillez vous inscrire avec /register <motdepasse> <confirmation>"
+}
+
+# Options pour les joueurs Bedrock (via Floodgate/GeyserMC)
 bedrock {
     # Activer l'authentification pour les joueurs Bedrock
     enabled = true
@@ -24,7 +44,8 @@ bedrock {
     # - REGISTER: Les joueurs Bedrock doivent s'inscrire
     # - LOGIN: Les joueurs Bedrock doivent se connecter
     # - BOTH: Les joueurs Bedrock peuvent s'inscrire ou se connecter
-    mode = "LOGIN"
+    # Pour un serveur CRACK, utilisez BOTH ou LOGIN
+    mode = "BOTH"
     
     # Message pour les joueurs Bedrock qui doivent se connecter
     login-message = "§cVeuillez vous connecter avec /login <motdepasse>"
@@ -105,6 +126,18 @@ security {
     
     # Durée du ban temporaire (en secondes)
     tempban-duration = 300
+    
+    # Options spécifiques pour les joueurs CRACK
+    crack {
+        # Activer la vérification des pseudos pour éviter les conflits
+        prevent-name-conflict = true
+        
+        # Autoriser les pseudos avec des caractères spéciaux (ex: §, &)
+        allow-special-characters = false
+        
+        # Autoriser les pseudos déjà utilisés par des joueurs premium
+        allow-premium-names = true
+    }
     
     # Options spécifiques pour Bedrock
     bedrock {

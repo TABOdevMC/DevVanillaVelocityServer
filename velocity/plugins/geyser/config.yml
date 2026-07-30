@@ -1,0 +1,90 @@
+# Configuration de GeyserMC pour Velocity
+# Permet aux joueurs Bedrock de rejoindre le serveur Java
+
+# Activer ou désactiver GeyserMC
+enabled: true
+
+# Mode de fonctionnement
+# - STANDALONE: GeyserMC fonctionne seul (sans Floodgate)
+# - FLOODGATE: GeyserMC fonctionne avec Floodgate (recommandé)
+mode: FLOODGATE
+
+# Adresse et port pour les joueurs Bedrock
+bind-address: "0.0.0.0"
+port: 19132
+
+# Motd pour les joueurs Bedrock
+motd:
+  line1: "§6DevVanilla §8| §eRejoignez depuis Bedrock !"
+  line2: "§7Serveur Java + Bedrock"
+
+# Nombre maximal de joueurs Bedrock
+max-players: 100
+
+# Options de connexion
+connection:
+  # Timeout de connexion (en secondes)
+  timeout: 30
+  
+  # Activer la vérification des paquets
+  verify-packets: true
+  
+  # Activer la compression
+  compression: true
+
+# Options de joueur
+player:
+  # Préfixe pour les joueurs Bedrock dans le chat
+  prefix: "§7[BE] "
+  
+  # Suffix pour les joueurs Bedrock dans le chat
+  suffix: ""
+  
+  # Cacher le préfixe/suffix dans la tablist
+  hide-prefix-in-tab: false
+
+# Options de chat
+chat:
+  # Synchroniser le chat entre Java et Bedrock
+  sync: true
+  
+  # Format du chat pour les joueurs Bedrock
+  bedrock-format: "§7%prefix%%name%§7: %message%"
+  
+  # Format du chat pour les joueurs Java
+  java-format: "§7%prefix%%name%§7: %message%"
+
+# Options de sécurité
+security:
+  # Empêcher les joueurs Bedrock de se faire passer pour des joueurs Java
+  prevent-spoofing: true
+  
+  # Vérifier les signatures des paquets
+  verify-signatures: true
+
+# Options de logging
+logging:
+  # Activer les logs des connexions
+  log-connections: true
+  
+  # Activer les logs des déconnexions
+  log-disconnections: true
+  
+  # Activer les logs des erreurs
+  log-errors: true
+
+# Options de performance
+performance:
+  # Nombre de threads pour le traitement des paquets
+  threads: 4
+  
+  # Taille maximale du cache des joueurs
+  max-cache-size: 1000
+
+# Options de compatibilité
+compatibility:
+  # Activer la compatibilité avec les versions anciennes de Bedrock
+  legacy-support: true
+  
+  # Activer la compatibilité avec les modded clients Bedrock
+  modded-support: false

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Script pour télécharger automatiquement les plugins pour Velocity et Paper
-# Inclut Floodgate pour le support Bedrock
+# Inclut Floodgate et GeyserMC pour le support Bedrock
+# Serveur CRACK (offline mode) avec /login
 # Assurez-vous que wget ou curl est installé.
 
 # Couleurs pour les messages
@@ -46,7 +47,7 @@ mkdir -p servers/creatif/plugins
 mkdir -p servers/minijeux/plugins
 
 # Télécharger les plugins pour Velocity
-echo -e "\n${BLUE}=== Téléchargement des plugins pour Velocity ===${NC}\n"
+echo -e "\n${BLUE}=== Téléchargement des plugins pour Velocity (Serveur CRACK) ===${NC}\n"
 
 # LuckPerms (Velocity)
 download_plugin "https://ci.lucko.me/job/LuckPerms/lastSuccessfulBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-5.4.100.jar" \
@@ -63,7 +64,8 @@ download_plugin "https://github.com/Leako/AdvancedBan/releases/download/2.1.6/Ad
     "velocity/plugins/advancedban.jar" \
     "AdvancedBan (Velocity)"
 
-# VelocityAuth (Velocity)
+# VelocityAuth (Velocity) - Pour le /login
+# Version modifiée pour le mode CRACK
 download_plugin "https://github.com/Patbox/VelocityAuth/releases/download/2.0.0/VelocityAuth-2.0.0.jar" \
     "velocity/plugins/velocityauth.jar" \
     "VelocityAuth (Velocity)"
@@ -77,6 +79,11 @@ download_plugin "https://github.com/ImaginaryDevelopment/RedisBungee/releases/do
 download_plugin "https://ci.opencollab.dev/job/GeyserMC/job/Floodgate/job/master/lastSuccessfulBuild/artifact/bootstrap/velocity/build/libs/floodgate-velocity-2.2.1.jar" \
     "velocity/plugins/floodgate.jar" \
     "Floodgate (Velocity)"
+
+# GeyserMC (Velocity) - Alternative à Floodgate pour Bedrock
+download_plugin "https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/velocity/build/libs/geyser-velocity-2.2.0-SNAPSHOT.jar" \
+    "velocity/plugins/geyser.jar" \
+    "GeyserMC (Velocity)"
 
 # Télécharger les plugins pour le Lobby
 echo -e "\n${BLUE}=== Téléchargement des plugins pour le Lobby ===${NC}\n"
@@ -102,9 +109,12 @@ for server in survie creatif minijeux; do
 done
 
 echo -e "\n${GREEN}=== Tous les plugins ont été téléchargés ! ===${NC}\n"
-echo "Pour activer le support Bedrock, assurez-vous que :"
-echo "1. Floodgate est dans velocity/plugins/"
-echo "2. Le port 19132 est ouvert sur votre serveur"
-echo "3. velocity.toml a la configuration Bedrock activée"
+echo "Pour un serveur CRACK avec support Bedrock :"
+echo "1. Assurez-vous que online_mode = false dans velocity.toml"
+echo "2. Floodgate et GeyserMC sont dans velocity/plugins/"
+echo "3. Le port 19132 est ouvert sur votre serveur"
+echo "4. VelocityAuth est configuré en mode BOTH ou LOGIN"
+echo ""
+echo "Les joueurs Java et Bedrock devront utiliser /login ou /register"
 echo ""
 echo "Vous pouvez maintenant lancer les serveurs avec ./start_all.sh"

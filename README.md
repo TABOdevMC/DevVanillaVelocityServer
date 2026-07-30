@@ -1,13 +1,14 @@
 # DevVanillaVelocityServer
 
-Un serveur Minecraft **Velocity** avec **4 sous-serveurs Paper** pour la version **1.20.6** prenant en charge **Java et Bedrock** :
+Un serveur Minecraft **Velocity** avec **4 sous-serveurs Paper** pour la version **1.20.6** prenant en charge **Java et Bedrock** en **mode CRACK** :
 - **Lobby** (point d'entrée pour les joueurs)
 - **Survie** (mode survie classique)
 - **Créatif** (mode créatif)
 - **Mini-Jeux** (pour les jeux personnalisés)
 
 **Fonctionnalités clés** :
-✅ **Support Java + Bedrock** (via Floodgate)
+✅ **Serveur CRACK** (offline mode) – Pas besoin de compte premium pour Java
+✅ **Support Java + Bedrock** (via Floodgate **et** GeyserMC)
 ✅ **Authentification unifiée** (`/login` pour tous les joueurs)
 ✅ **Permissions globales** (LuckPerms)
 ✅ **Bans inter-serveurs** (AdvancedBan)
@@ -20,10 +21,10 @@ Un serveur Minecraft **Velocity** avec **4 sous-serveurs Paper** pour la version
 
 ```
 DevVanillaVelocityServer/
-├── velocity/                          # Proxy Velocity
-│   ├── velocity.toml                  # Configuration principale (ports Java + Bedrock)
+├── velocity/                          # Proxy Velocity (mode CRACK)
+│   ├── velocity.toml                  # Configuration principale (online_mode = false)
 │   ├── servers.json                   # Liste des sous-serveurs
-│   ├── forwarding.secret              # Clé de forwarding
+│   ├── forwarding.secret              # Clé de forwarding (optionnelle)
 │   ├── start.sh                       # Lancement (Linux/macOS)
 │   ├── start.bat                      # Lancement (Windows)
 │   └── plugins/                       # Plugins Velocity
@@ -33,16 +34,18 @@ DevVanillaVelocityServer/
 │       │   └── config.json
 │       ├── advancedban/               # ✅ Bans inter-serveurs
 │       │   └── config.yml
-│       ├── velocityauth/              # ✅ Authentification unifiée
+│       ├── velocityauth/              # ✅ Authentification unifiée (/login)
 │       │   └── config.toml
 │       ├── redisbungee/               # ✅ Synchronisation Redis
 │       │   └── config.yml
-│       └── floodgate/                  # ✅ Support Bedrock
+│       ├── floodgate/                  # ✅ Support Bedrock (mode OFFLINE)
+│       │   └── config.yml
+│       └── geyser/                     # ✅ Alternative à Floodgate (Bedrock)
 │           └── config.yml
 │
 ├── servers/                           # Sous-serveurs Paper
 │   ├── lobby/                         # Lobby (port 25568)
-│   │   ├── server.properties
+│   │   ├── server.properties          # online-mode = false
 │   │   ├── paper.yml
 │   │   ├── eula.txt
 │   │   ├── start.sh
@@ -54,7 +57,7 @@ DevVanillaVelocityServer/
 │   │           └── config.yml
 │   │
 │   ├── survie/                        # Survie (port 25565)
-│   │   ├── server.properties
+│   │   ├── server.properties          # online-mode = false
 │   │   ├── paper.yml
 │   │   ├── eula.txt
 │   │   ├── start.sh
@@ -64,7 +67,7 @@ DevVanillaVelocityServer/
 │   │           └── config.yml
 │   │
 │   ├── creatif/                       # Créatif (port 25566)
-│   │   ├── server.properties
+│   │   ├── server.properties          # online-mode = false
 │   │   ├── paper.yml
 │   │   ├── eula.txt
 │   │   ├── start.sh
@@ -74,7 +77,7 @@ DevVanillaVelocityServer/
 │   │           └── config.yml
 │   │
 │   └── minijeux/                      # Mini-Jeux (port 25567)
-│       ├── server.properties
+│       ├── server.properties          # online-mode = false
 │       ├── paper.yml
 │       ├── eula.txt
 │       ├── start.sh
@@ -103,7 +106,7 @@ DevVanillaVelocityServer/
   - [Télécharger Paper](https://papermc.io/downloads)
 - **Ports ouverts** :
   - `25577` (Velocity - Java)
-  - `19132` (Velocity - Bedrock via Floodgate)
+  - `19132` (Velocity - Bedrock via Floodgate/GeyserMC)
   - `25565` (Survie)
   - `25566` (Créatif)
   - `25567` (Mini-Jeux)
@@ -125,64 +128,99 @@ Modifiez `eula.txt` dans chaque sous-serveur :
 + eula=true
 ```
 
-### 3. Générer la clé de forwarding
-```bash
-# Linux/macOS
-java -jar velocity/velocity.jar --generate-forwarding-secret
+### 3. Configurer le mode CRACK
+Pour un **serveur CRACK**, assurez-vous que `online_mode` est à **`false`** dans :
+- `velocity/velocity.toml`
+- `servers/<nom>/server.properties` (pour chaque sous-serveur)
 
-# Windows
-java -jar velocity\velocity.jar --generate-forwarding-secret
+**Exemple pour `velocity/velocity.toml`** :
+```toml
+online_mode = false  # Mode CRACK
 ```
-Copiez la clé dans `velocity/forwarding.secret`.
 
-### 4. Configurer le forwarding dans Paper
-Dans `server.properties` de chaque sous-serveur :
+**Exemple pour `servers/survie/server.properties`** :
 ```properties
-bungeecord: true
-online-mode: false
+online-mode=false  # Mode CRACK
+bungeecord=true
 ```
 
 ---
 
-## 🎮 Support Java + Bedrock
+## 🎮 Support Java + Bedrock (Mode CRACK)
 
-### **Floodgate**
-Floodgate permet aux joueurs **Bedrock** de rejoindre votre serveur **Java** via Velocity.
+### **Floodgate + GeyserMC**
+Ces deux plugins permettent aux joueurs **Bedrock** de rejoindre votre serveur **Java** en mode CRACK.
 
-#### **Configuration**
+| Plugin | Rôle | Port | Mode CRACK |
+|--------|------|------|------------|
+| **Floodgate** | Conversion des connexions Bedrock → Java | `19132` | ✅ Oui |
+| **GeyserMC** | Proxy Bedrock → Java (alternative) | `19132` | ✅ Oui |
+
+> ⚠️ **Note** : Vous pouvez utiliser **Floodgate seul** ou **Floodgate + GeyserMC** pour une meilleure compatibilité.
+
+---
+
+### **Configuration de Floodgate**
 - **Fichier** : `velocity/plugins/floodgate/config.yml`
-- **Port Bedrock** : `19132` (configuré dans `velocity.toml`)
-- **Mode** : `ONLINE` (les joueurs Bedrock doivent se connecter avec un compte Microsoft)
+- **Mode** : `OFFLINE` (pour un serveur CRACK)
 
 **Exemple de configuration** :
 ```yaml
 # velocity/plugins/floodgate/config.yml
 enabled: true
-mode: ONLINE  # ONLINE, OFFLINE ou HYBRID
+mode: OFFLINE  # Mode CRACK (les joueurs Bedrock peuvent utiliser n'importe quel pseudo)
 bedrock-port: 19132
 bedrock-bind: "0.0.0.0"
 welcome-message: "§aBienvenue, %player% ! Vous jouez depuis Bedrock."
 bedrock-prefix: "§7[BE] "
 sync-chat: true
-bedrock-chat-format: "§7%prefix%%name%§7: %message%"
-java-chat-format: "§7%prefix%%name%§7: %message%"
+
+# Compatibilité avec GeyserMC
+geyser:
+  enabled: true
+  use-geyser: true
 ```
 
-#### **Comment se connecter depuis Bedrock ?**
-1. **Adresse** : Utilisez l’IP de votre serveur avec le port **19132** (ex: `votre-ip:19132`)
-2. **Authentification** : Les joueurs Bedrock devront utiliser `/login` ou `/register` (si VelocityAuth est activé).
+---
+
+### **Configuration de GeyserMC**
+- **Fichier** : `velocity/plugins/geyser/config.yml`
+- **Mode** : `FLOODGATE` (pour fonctionner avec Floodgate)
+
+**Exemple de configuration** :
+```yaml
+# velocity/plugins/geyser/config.yml
+enabled: true
+mode: FLOODGATE  # Fonctionne avec Floodgate
+bind-address: "0.0.0.0"
+port: 19132
+
+motd:
+  line1: "§6DevVanilla §8| §eRejoignez depuis Bedrock !"
+  line2: "§7Serveur CRACK (Java + Bedrock)"
+
+player:
+  prefix: "§7[BE] "
+  
+chat:
+  sync: true
+  bedrock-format: "§7%prefix%%name%§7: %message%"
+  java-format: "§7%prefix%%name%§7: %message%"
+
+security:
+  prevent-spoofing: true
+```
 
 ---
 
 ## 🔐 Authentification unifiée (`/login`)
 
-### **VelocityAuth**
+### **VelocityAuth (Mode CRACK)**
 VelocityAuth permet une **authentification centralisée** pour les joueurs **Java et Bedrock** avant de rejoindre un serveur.
 
-#### **Configuration**
+#### **Configuration pour le mode CRACK**
 - **Fichier** : `velocity/plugins/velocityauth/config.toml`
 - **Mode** : `BOTH` (les joueurs peuvent s’inscrire ou se connecter)
-- **Fallback** : `lobby` (les joueurs sont redirigés vers le Lobby après authentification)
 
 **Exemple de configuration** :
 ```toml
@@ -191,34 +229,36 @@ enabled = true
 mode = "BOTH"  # NONE, REGISTER, LOGIN ou BOTH
 fallback-server = "lobby"
 
-# Options pour les joueurs Bedrock
-bedrock {
+# Options pour les joueurs Java (CRACK)
+java {
     enabled = true
-    mode = "LOGIN"  # Les joueurs Bedrock doivent se connecter
+    mode = "BOTH"  # Les joueurs Java doivent s'inscrire ou se connecter
     login-message = "§cVeuillez vous connecter avec /login <motdepasse>"
     register-message = "§cVeuillez vous inscrire avec /register <motdepasse> <confirmation>"
 }
 
-# Messages
-messages {
-    login {
-        success = "§aConnexion réussie ! Bienvenue, %player% !"
-        failure = "§cMot de passe incorrect !"
-    }
-    register {
-        success = "§aInscription réussie ! Bienvenue, %player% !"
-        failure = "§cCe pseudo est déjà enregistré !"
-        password-too-short = "§cLe mot de passe doit contenir au moins 4 caractères !"
-    }
+# Options pour les joueurs Bedrock
+bedrock {
+    enabled = true
+    mode = "BOTH"  # Les joueurs Bedrock doivent s'inscrire ou se connecter
+    login-message = "§cVeuillez vous connecter avec /login <motdepasse>"
+    register-message = "§cVeuillez vous inscrire avec /register <motdepasse> <confirmation>"
 }
 
-# Sécurité
+# Sécurité pour le mode CRACK
 security {
     hash-algorithm = "BCRYPT"
     min-password-length = 4
     prevent-multiple-logins = true
     max-login-attempts = 5
     tempban-duration = 300  # 5 minutes
+    
+    # Options spécifiques pour le mode CRACK
+    crack {
+        prevent-name-conflict = true
+        allow-special-characters = false
+        allow-premium-names = true
+    }
 }
 ```
 
@@ -229,7 +269,7 @@ security {
 | `/register <motdepasse> <confirmation>` | S’inscrire | `/register monmotdepasse monmotdepasse` |
 | `/changepassword <ancien> <nouveau>` | Changer son mot de passe | `/changepassword ancien nouveau` |
 
-> ⚠️ **Note** : Les joueurs **Bedrock** devront aussi utiliser ces commandes s’ils sont en mode `LOGIN` ou `BOTH`.
+> ✅ **Tous les joueurs (Java et Bedrock) doivent utiliser ces commandes !**
 
 ---
 
@@ -244,7 +284,8 @@ security {
 | **AdvancedBan** | Velocity | Bans inter-serveurs (ban, tempban, kick, mute). | [AdvancedBan](https://github.com/Leako/AdvancedBan) |
 | **VelocityAuth** | Velocity | Authentification centralisée (`/login`). | [VelocityAuth](https://github.com/Patbox/VelocityAuth) |
 | **RedisBungee** | Velocity | Synchronisation des données (chat, bans, permissions). | [RedisBungee](https://github.com/ImaginaryDevelopment/RedisBungee) |
-| **Floodgate** | Velocity | Support des joueurs Bedrock. | [Floodgate](https://github.com/GeyserMC/Floodgate) |
+| **Floodgate** | Velocity | Support des joueurs Bedrock (mode OFFLINE). | [Floodgate](https://github.com/GeyserMC/Floodgate) |
+| **GeyserMC** | Velocity | Proxy Bedrock → Java (alternative). | [GeyserMC](https://geysermc.org/) |
 | **EssentialsX** | Paper (Lobby) | Commandes de base (`/warp`, `/spawn`, `/fly`). | [EssentialsX](https://essentialsx.net/) |
 
 ---
@@ -263,24 +304,17 @@ velocity/plugins/
 ├── advancedban/        # ✅ Bans inter-serveurs
 │   └── config.yml      # Messages, permissions, stockages
 │
-├── velocityauth/       # ✅ Authentification unifiée
-│   └── config.toml     # Mode BOTH, fallback-server: lobby
+├── velocityauth/       # ✅ Authentification unifiée (/login)
+│   └── config.toml     # Mode BOTH pour Java et Bedrock
 │
 ├── redisbungee/        # ✅ Synchronisation Redis
 │   └── config.yml      # Chat global, sync bans/permissions
 │
-└── floodgate/          # ✅ Support Bedrock
-    └── config.yml      # Port 19132, mode ONLINE
-```
-
-#### **Lobby** (`servers/lobby/plugins/`)
-```
-servers/lobby/plugins/
-├── luckperms/          # Permissions synchronisées
-│   └── config.yml
+├── floodgate/          # ✅ Support Bedrock (mode OFFLINE)
+│   └── config.yml      # Port 19132, mode OFFLINE
 │
-└── essentials/         # Commandes de base
-    └── config.yml      # Warps vers les autres serveurs
+└── geyser/             # ✅ Alternative à Floodgate (Bedrock)
+    └── config.yml      # Port 19132, mode FLOODGATE
 ```
 
 ---
@@ -581,7 +615,7 @@ Pour que les **bans**, les **permissions** et le **chat** soient **globaux**, ut
    # velocity/plugins/redisbungee/config.yml
    redis:
      enabled: true
-     host: "127.0.0.0"
+     host: "127.0.0.1"
      port: 6379
    ```
    ```yaml
@@ -598,19 +632,22 @@ Pour que les **bans**, les **permissions** et le **chat** soient **globaux**, ut
 
 ### **Velocity**
 - **Port Java** : `25577`
-- **Port Bedrock** : `19132` (via Floodgate)
-- **MOTD** : `§6DevVanilla §8| §eVelocity Proxy (Java + Bedrock)`
+- **Port Bedrock** : `19132` (via Floodgate/GeyserMC)
+- **Mode** : `OFFLINE` (serveur CRACK)
+- **MOTD** : `§6DevVanilla §8| §eServeur CRACK (Java + Bedrock)`
 - **Serveur par défaut** : `lobby`
 - **Servers backend** : `lobby`, `survie`, `creatif`, `minijeux`
 
 ### **Sous-serveurs Paper**
 
-| Serveur    | Port  | Mode       | Difficulté | PvP  | Vol | Type de monde | Description |
-|------------|-------|------------|------------|------|-----|--------------|-------------|
-| **Lobby**  | 25568 | Adventure  | Peaceful   | ❌   | ✅  | Flat         | Point d’entrée |
-| **Survie** | 25565 | Survival   | Normal     | ✅   | ❌  | Default      | Mode survie |
-| **Créatif**| 25566 | Creative   | Peaceful   | ❌   | ✅  | Flat         | Mode créatif |
-| **Mini-Jeux**|25567| Adventure  | Normal     | ✅   | ❌  | Default      | Jeux personnalisés |
+| Serveur | Port | Mode | Difficulté | PvP | Vol | Type de monde | Description |
+|---------|------|------|------------|-----|-----|--------------|-------------|
+| **Lobby** | 25568 | Adventure | Peaceful | ❌ | ✅ | Flat | Point d’entrée |
+| **Survie** | 25565 | Survival | Normal | ✅ | ❌ | Default | Mode survie |
+| **Créatif** | 25566 | Creative | Peaceful | ❌ | ✅ | Flat | Mode créatif |
+| **Mini-Jeux** | 25567 | Adventure | Normal | ✅ | ❌ | Default | Jeux personnalisés |
+
+> ⚠️ **Important** : Tous les sous-serveurs doivent avoir `online-mode=false` dans `server.properties`.
 
 ---
 
@@ -625,12 +662,18 @@ Pour que les **bans**, les **permissions** et le **chat** soient **globaux**, ut
 | `/server minijeux` | Envoyer un joueur sur Mini-Jeux. |
 | `/list` | Lister les serveurs disponibles. |
 
+---
+
 ### **Authentification (`/login`)**
 | Commande | Description | Exemple |
 |----------|-------------|---------|
 | `/login <motdepasse>` | Se connecter | `/login monmotdepasse` |
 | `/register <motdepasse> <confirmation>` | S’inscrire | `/register monmotdepasse monmotdepasse` |
 | `/changepassword <ancien> <nouveau>` | Changer son mot de passe | `/changepassword ancien nouveau` |
+
+> ✅ **Tous les joueurs (Java et Bedrock) doivent utiliser ces commandes !**
+
+---
 
 ### **AdvancedBan (Bans globaux)**
 | Commande | Description | Exemple |
@@ -642,12 +685,16 @@ Pour que les **bans**, les **permissions** et le **chat** soient **globaux**, ut
 | `/mute <joueur> <raison>` | Muter un joueur | `/mute NotCH Insultes` |
 | `/warn <joueur> <raison>` | Avertir un joueur | `/warn NotCH Avertissement` |
 
+---
+
 ### **LuckPerms (Permissions)**
 | Commande | Description | Exemple |
 |----------|-------------|---------|
-| `/lp editor` | Ouvrir l’éditeur de permissions | `/lp editor` |
+| `/lp editor` | Ouvrir l'éditeur de permissions | `/lp editor` |
 | `/lp group <nom> permission set <permission>` | Ajouter une permission | `/lp group vip permission set essentials.fly` |
 | `/lp user <joueur> group add <groupe>` | Ajouter un joueur à un groupe | `/lp user Steve group add vip` |
+
+---
 
 ### **EssentialsX (Lobby)**
 | Commande | Description | Exemple |
@@ -684,19 +731,26 @@ start_all.bat
 
 ## ⚠️ Résolution des problèmes
 
-### **Problèmes avec Floodgate (Bedrock)**
+### **Problèmes avec le mode CRACK**
 | Problème | Solution |
 |----------|----------|
-| **Les joueurs Bedrock ne peuvent pas se connecter** | Vérifiez que le port `19132` est ouvert et que Floodgate est dans `velocity/plugins/`. |
-| **Erreur "Invalid session"** | Assurez-vous que `online_mode: true` est activé dans `velocity.toml`. |
-| **Les joueurs Bedrock voient un message d’erreur** | Vérifiez que Floodgate est bien configuré (`mode: ONLINE`). |
-| **Les joueurs Bedrock ne peuvent pas utiliser `/login`** | Vérifiez que `bedrock.enabled: true` est activé dans `velocityauth/config.toml`. |
+| **Les joueurs Java ne peuvent pas se connecter** | Vérifiez que `online_mode = false` dans `velocity.toml` et `server.properties`. |
+| **Les joueurs voient "Invalid session"** | Assurez-vous que `online_mode` est bien à `false` partout. |
+| **Les joueurs ne peuvent pas utiliser `/login`** | Vérifiez que VelocityAuth est bien configuré (`mode = "BOTH"`). |
+
+### **Problèmes avec Floodgate/GeyserMC (Bedrock)**
+| Problème | Solution |
+|----------|----------|
+| **Les joueurs Bedrock ne peuvent pas se connecter** | Vérifiez que le port `19132` est ouvert et que Floodgate/GeyserMC est dans `velocity/plugins/`. |
+| **Erreur "Connection refused"** | Assurez-vous que Velocity est lancé et que le port `19132` est bien configuré. |
+| **Les joueurs Bedrock voient un message d’erreur** | Vérifiez que Floodgate est en mode `OFFLINE` pour un serveur CRACK. |
+| **Les joueurs Bedrock ne peuvent pas utiliser `/login`** | Vérifiez que `bedrock.enabled = true` est activé dans `velocityauth/config.toml`. |
 
 ### **Problèmes avec VelocityAuth**
 | Problème | Solution |
 |----------|----------|
-| **Les joueurs ne sont pas redirigés après `/login`** | Vérifiez que `fallback-server: "lobby"` est bien configuré. |
-| **Les joueurs Bedrock ne peuvent pas se connecter** | Vérifiez que `bedrock.mode: "LOGIN"` ou `"BOTH"` est activé. |
+| **Les joueurs ne sont pas redirigés après `/login`** | Vérifiez que `fallback-server = "lobby"` est bien configuré. |
+| **Les joueurs Bedrock ne peuvent pas se connecter** | Vérifiez que `bedrock.mode = "BOTH"` ou `"LOGIN"` est activé. |
 | **Mot de passe oublié** | Utilisez `/changepassword <ancien> <nouveau>`. |
 
 ### **Problèmes avec AdvancedBan**
@@ -704,12 +758,6 @@ start_all.bat
 |----------|----------|
 | **Les bans ne sont pas globaux** | Utilisez MySQL ou Redis pour la synchronisation. |
 | **Les modérateurs ne voient pas les bans** | Vérifiez les permissions (`advancedban.ban`, `advancedban.tempban`). |
-
-### **Problèmes avec Redis**
-| Problème | Solution |
-|----------|----------|
-| **Connexion refusée** | Vérifiez que Redis est lancé (`redis-server`). |
-| **Mot de passe incorrect** | Vérifiez le mot de passe dans `velocity/plugins/redisbungee/config.yml`. |
 
 ---
 
@@ -722,6 +770,7 @@ start_all.bat
 - [VelocityAuth](https://github.com/Patbox/VelocityAuth) (Authentification)
 - [RedisBungee](https://github.com/ImaginaryDevelopment/RedisBungee) (Synchronisation)
 - [Floodgate](https://github.com/GeyserMC/Floodgate) (Support Bedrock)
+- [GeyserMC](https://geysermc.org/) (Proxy Bedrock → Java)
 - [EssentialsX](https://essentialsx.net/) (Commandes de base)
 
 ### **Outils**
@@ -734,7 +783,7 @@ start_all.bat
 - [Documentation Velocity](https://papermc.io/velocity/)
 - [Documentation Paper](https://papermc.io/paper/)
 - [SpigotMC (Plugins)](https://www.spigotmc.org/resources/)
-- [GeyserMC (Bedrock)](https://geysermc.org/) (Documentation Floodgate)
+- [GeyserMC (Bedrock)](https://geysermc.org/docs/) (Documentation complète)
 
 ---
 
@@ -751,7 +800,7 @@ start_all.bat
 
 ### **Compatibilité**
 - **Java** : 1.20.6 (ou toute version supportée par Paper)
-- **Bedrock** : 1.20.50+ (via Floodgate)
+- **Bedrock** : 1.20.50+ (via Floodgate/GeyserMC)
 - **Velocity** : 3.3.0-SNAPSHOT (ou version compatible)
 - **Paper** : 1.20.6 (ou version compatible)
 
@@ -759,15 +808,16 @@ start_all.bat
 - **RAM recommandée** :
   - Velocity : 1-2 Go
   - Chaque serveur Paper : 2-4 Go
+  - Floodgate/GeyserMC : 512 Mo - 1 Go
   - Total : 8-16 Go (selon le nombre de joueurs)
 
 ---
 
 ## 🎉 Résumé
 
-Vous avez maintenant un serveur **Velocity + Paper** avec :
-✅ **Support Java + Bedrock** (Floodgate)
-✅ **Authentification unifiée** (`/login` pour tous)
+Vous avez maintenant un serveur **Velocity + Paper** en **mode CRACK** avec :
+✅ **Support Java + Bedrock** (Floodgate + GeyserMC)
+✅ **Authentification unifiée** (`/login` pour tous les joueurs)
 ✅ **Permissions globales** (LuckPerms)
 ✅ **Bans inter-serveurs** (AdvancedBan)
 ✅ **Tablist personnalisée** (TabList)
@@ -776,6 +826,25 @@ Vous avez maintenant un serveur **Velocity + Paper** avec :
 
 **Prochaines étapes** :
 1. Téléchargez les plugins avec `download_plugins.sh` ou `download_plugins.bat`.
-2. Configurez MySQL/Redis pour la synchronisation globale.
+2. Configurez `online_mode = false` dans `velocity.toml` et tous les `server.properties`.
 3. Lancez les serveurs avec `start_all.sh` ou `start_all.bat`.
-4. Testez la connexion depuis Java et Bedrock !
+4. Testez la connexion depuis Java et Bedrock avec `/login` !
+
+---
+
+## 💡 Conseils pour un serveur CRACK
+
+### **Sécurité**
+- **Limitez les permissions** : Ne donnez pas `*` à tout le monde. Utilisez des groupes (`default`, `vip`, `mod`, `admin`).
+- **Activez les bans temporaires** : Utilisez `/tempban` pour les joueurs problématiques.
+- **Surveillez les logs** : Vérifiez régulièrement les logs pour détecter les abusés.
+
+### **Optimisations**
+- **Utilisez Redis** pour synchroniser les bans et le chat entre les serveurs.
+- **Activez le cache** dans LuckPerms pour améliorer les performances.
+- **Limitez le nombre de joueurs** par serveur (`max-players` dans `server.properties`).
+
+### **Personnalisation**
+- **Modifiez les messages** dans `velocityauth/config.toml` pour correspondre à votre thème.
+- **Personnalisez la tablist** dans `tab-list/config.json` avec vos couleurs.
+- **Ajoutez des warps** dans `essentials/config.yml` pour faciliter la navigation.
