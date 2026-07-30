@@ -11,8 +11,11 @@ online_mode = true
 player_info_forwarding_mode = "LEGACY"
 forward_legacy_ping = true
 
+# Serveur par défaut pour les nouveaux joueurs
+default_server = "lobby"
+
 # Configuration des serveurs backend
-servers = ["survie", "creatif", "minijeux"]
+servers = ["lobby", "survie", "creatif", "minijeux"]
 
 # Configuration des logs
 log_level = "INFO"

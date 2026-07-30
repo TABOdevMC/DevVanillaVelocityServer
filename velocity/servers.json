@@ -1,4 +1,11 @@
 {
+  "lobby": {
+    "address": "127.0.0.1:25568",
+    "motd": "§6§lLobby §8| §eBienvenue sur DevVanilla!",
+    "restricted": false,
+    "maintenance": false,
+    "try": ["survie", "creatif", "minijeux"]
+  },
   "survie": {
     "address": "127.0.0.1:25565",
     "motd": "§aMode Survie",

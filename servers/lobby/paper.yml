@@ -1,0 +1,42 @@
+# Configuration de Paper pour le serveur Lobby
+# Version: 1.20.6
+
+# Optimisations des performances (désactivées pour le lobby)
+per-player-mob-spawns: false
+mob-spawn-range: 0
+entity-activation-range:
+  animals: 0
+  monsters: 0
+  raiders: 0
+  misc: 0
+  water: 0
+  village: 0
+  tick-inactive-villagers: false
+
+# Optimisations des chunks
+chunk-loading:
+  delay-chunk-unloads-by: 10s
+  max-concurrent-chunk-loads: 100
+  max-concurrent-chunk-saves: 2
+
+# Optimisations des entités
+fix-climbing-bypassing-cramming-rule: true
+prevent-moving-into-unloaded-chunks: true
+
+# Optimisations des redstones
+lag-compensate-block-updates: false
+
+# Optimisations des joueurs
+max-player-auto-save-per-tick: 1
+
+# Configuration du monde
+disable-end-credits: true
+
+# Configuration des logs
+log-player-ip-addresses: true
+
+# Désactiver les fonctionnalités inutiles pour un lobby
+disable:
+  - mob-spawning
+  - weather
+  - day-night-cycle

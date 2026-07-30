@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script pour lancer tous les serveurs (Velocity + 3 sous-serveurs Paper)
+# Script pour lancer tous les serveurs (Velocity + 4 sous-serveurs Paper)
 # Assurez-vous que Java 17+ est installé et que les JARs sont en place.
 
 # Couleurs pour les messages
@@ -8,6 +8,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Fonction pour vérifier si un port est utilisé
@@ -59,6 +60,7 @@ if ! command -v screen >/dev/null 2>&1; then
 fi
 
 # Lancer les sous-serveurs Paper
+launch_server "Lobby" "servers/lobby" "paper.jar" "25568" "$MAGENTA"
 launch_server "Survie" "servers/survie" "paper.jar" "25565" "$GREEN"
 launch_server "Créatif" "servers/creatif" "paper.jar" "25566" "$BLUE"
 launch_server "MiniJeux" "servers/minijeux" "paper.jar" "25567" "$YELLOW"
@@ -71,5 +73,5 @@ launch_server "Velocity" "velocity" "velocity.jar" "25577" "$RED"
 
 echo -e "\n${YELLOW}Tous les serveurs ont été lancés!${NC}"
 echo -e "Utilisez 'screen -r <nom_du_serveur>' pour accéder à la console d'un serveur."
-echo -e "Exemple: screen -r Survie"
+echo -e "Exemple: screen -r Lobby"
 echo -e "Pour quitter un screen sans le fermer: Ctrl+A puis D${NC}"
