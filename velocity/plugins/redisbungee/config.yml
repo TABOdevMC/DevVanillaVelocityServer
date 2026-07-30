@@ -1,0 +1,43 @@
+# Configuration de RedisBungee pour Velocity
+# Version: 1.0
+
+# Activer ou désactiver Redis
+redis:
+  enabled: false
+  
+  # Adresse du serveur Redis
+  host: "127.0.0.1"
+  
+  # Port du serveur Redis
+  port: 6379
+  
+  # Mot de passe Redis (laisser vide si aucun)
+  password: ""
+  
+  # Base de données Redis (0 par défaut)
+  database: 0
+  
+  # Timeout de connexion (en millisecondes)
+  timeout: 2000
+
+# Options de synchronisation
+sync:
+  # Synchroniser les messages de chat entre les serveurs
+  chat: true
+  
+  # Synchroniser les commandes entre les serveurs
+  commands: true
+  
+  # Synchroniser les permissions (nécessite LuckPerms)
+  permissions: true
+  
+  # Synchroniser les bans (nécessite AdvancedBan)
+  bans: true
+
+# Options de logging
+logging:
+  # Activer les logs des connexions Redis
+  log-connections: true
+  
+  # Activer les logs des erreurs Redis
+  log-errors: true

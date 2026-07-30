@@ -9,7 +9,6 @@ logs/
 */the_end/
 
 # Fichiers de session et cache
-*.jar
 cache/
 
 # Fichiers de configuration locale
@@ -27,10 +26,11 @@ crash-*/
 debug/
 
 # Fichiers de plugins (sauf configuration)
-*/plugins/*
+*/plugins/*.jar
 !*/plugins/*.yml
 !*/plugins/*.json
 !*/plugins/*.toml
+!*/plugins/*.conf
 
 # Fichiers de screen (si utilisés)
 *.screen
@@ -40,3 +40,8 @@ debug/
 
 # Fichiers de temporaires
 *.tmp
+
+# Fichiers de base de données (H2, SQLite, etc.)
+*.h2
+*.db
+*.mdb

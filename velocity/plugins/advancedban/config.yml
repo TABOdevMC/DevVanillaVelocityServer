@@ -1,0 +1,96 @@
+# Configuration d'AdvancedBan pour Velocity
+# Version: 2.1
+
+# Stockage des données (MySQL recommandé pour la synchronisation)
+database:
+  # Type : h2, mysql, mariadb
+  type: h2
+  
+  # Configuration pour H2 (fichier local)
+  h2:
+    path: "{DIR}/advancedban"
+  
+  # Configuration pour MySQL (recommandé pour les grands serveurs)
+  # mysql:
+  #   host: "127.0.0.1"
+  #   port: 3306
+  #   database: "advancedban"
+  #   username: "root"
+  #   password: "votre_mot_de_passe"
+
+# Synchronisation avec Redis (optionnel pour la synchronisation en temps réel)
+redis:
+  enabled: false
+  # host: "127.0.0.1"
+  # port: 6379
+  # password: ""
+
+# Messages de ban
+messages:
+  ban:
+    broadcast: "§c%player% a été banni par %operator% pour : %reason%"
+    notify: "§cVous avez été banni de ce serveur !\n§7Raison : %reason%\n§7Expire : %expire%\n§7Appel possible : %appeal%"
+    
+  tempban:
+    broadcast: "§c%player% a été temporairement banni par %operator% pour : %reason% (%duration%)"
+    notify: "§cVous avez été temporairement banni !\n§7Raison : %reason%\n§7Durée : %duration%\n§7Expire : %expire%"
+    
+  unban:
+    broadcast: "§a%player% a été débanni par %operator%"
+    
+  kick:
+    broadcast: "§c%player% a été éjecté par %operator% pour : %reason%"
+    notify: "§cVous avez été éjecté du serveur !\n§7Raison : %reason%"
+
+# Commandes autorisées
+commands:
+  ban: true
+  tempban: true
+  unban: true
+  kick: true
+  mute: true
+  warn: true
+  history: true
+  check: true
+
+# Permissions
+permissions:
+  ban: "advancedban.ban"
+  tempban: "advancedban.tempban"
+  unban: "advancedban.unban"
+  kick: "advancedban.kick"
+  mute: "advancedban.mute"
+  warn: "advancedban.warn"
+  history: "advancedban.history"
+  check: "advancedban.check"
+
+# Options de logging
+logging:
+  ban: true
+  tempban: true
+  unban: true
+  kick: true
+  mute: true
+  warn: true
+
+# Options de sécurité
+security:
+  # Empêcher les opérateurs de se bannir eux-mêmes
+  prevent-self-ban: true
+  
+  # Empêcher les opérateurs de bannir des joueurs avec un rang supérieur
+  prevent-higher-ban: true
+
+# Options de temps par défaut
+defaults:
+  ban-duration: "1d"
+  tempban-duration: "1h"
+  mute-duration: "30m"
+
+# Options de notification
+notifications:
+  # Notifier les modérateurs des bans
+  notify-on-join: true
+  
+  # Notifier les modérateurs des connexions de joueurs bannis
+  notify-banned-on-join: true

@@ -6,392 +6,678 @@ Un serveur Minecraft **Velocity** avec **4 sous-serveurs Paper** pour la version
 - **Créatif** (mode créatif)
 - **Mini-Jeux** (pour les jeux personnalisés)
 
-## Structure du projet
+## 📁 Structure du projet
 
 ```
 DevVanillaVelocityServer/
-├── velocity/                  # Dossier principal de Velocity (Proxy)
-│   ├── velocity.toml          # Configuration principale de Velocity
-│   ├── servers.json           # Liste des sous-serveurs backend
-│   ├── forwarding.secret      # Clé secrète pour le forwarding des infos joueurs
-│   ├── start.sh               # Script de lancement pour Linux/macOS
-│   ├── start.bat              # Script de lancement pour Windows
-│   ├── plugins/               # Dossier pour les plugins Velocity
-│   └── logs/                  # Dossier pour les logs
+├── velocity/                          # Proxy Velocity
+│   ├── velocity.toml                  # Configuration principale
+│   ├── servers.json                   # Liste des sous-serveurs
+│   ├── forwarding.secret              # Clé de forwarding
+│   ├── start.sh                       # Lancement (Linux/macOS)
+│   ├── start.bat                      # Lancement (Windows)
+│   └── plugins/                       # Plugins Velocity
+│       ├── luckperms/                 # Gestion des permissions
+│       │   └── config.yml
+│       ├── tab-list/                  # Tablist personnalisée
+│       │   └── config.json
+│       ├── advancedban/               # Bans inter-serveurs
+│       │   └── config.yml
+│       ├── velocityauth/              # Authentification
+│       │   └── config.toml
+│       └── redisbungee/               # Synchronisation Redis
+│           └── config.yml
 │
-└── servers/                   # Dossier des sous-serveurs Paper
-    ├── lobby/                 # Sous-serveur Lobby (point d'entrée)
-    │   ├── server.properties   # Configuration du serveur
-    │   ├── paper.yml           # Optimisations Paper
-    │   ├── eula.txt            # EULA Minecraft
-    │   ├── start.sh            # Script de lancement pour Linux/macOS
-    │   └── start.bat           # Script de lancement pour Windows
-    │
-    ├── survie/                # Sous-serveur en mode Survie
-    │   ├── server.properties
-    │   ├── paper.yml
-    │   ├── eula.txt
-    │   ├── start.sh
-    │   └── start.bat
-    │
-    ├── creatif/               # Sous-serveur en mode Créatif
-    │   ├── server.properties
-    │   ├── paper.yml
-    │   ├── eula.txt
-    │   ├── start.sh
-    │   └── start.bat
-    │
-    └── minijeux/              # Sous-serveur pour les Mini-Jeux
-        ├── server.properties
-        ├── paper.yml
-        ├── eula.txt
-        ├── start.sh
-        └── start.bat
-
-├── start_all.sh               # Lance tous les serveurs en 1 commande (Linux/macOS)
-├── start_all.bat              # Lance tous les serveurs en 1 commande (Windows)
-├── .gitignore                 # Exclut logs, mondes, etc.
-└── README.md                  # Ce fichier
+├── servers/                           # Sous-serveurs Paper
+│   ├── lobby/                         # Lobby (port 25568)
+│   │   ├── server.properties
+│   │   ├── paper.yml
+│   │   ├── eula.txt
+│   │   ├── start.sh
+│   │   ├── start.bat
+│   │   └── plugins/                   # Plugins du Lobby
+│   │       ├── luckperms/
+│   │       │   └── config.yml
+│   │       └── essentials/
+│   │           └── config.yml
+│   │
+│   ├── survie/                        # Survie (port 25565)
+│   │   ├── server.properties
+│   │   ├── paper.yml
+│   │   ├── eula.txt
+│   │   ├── start.sh
+│   │   ├── start.bat
+│   │   └── plugins/
+│   │       └── luckperms/
+│   │           └── config.yml
+│   │
+│   ├── creatif/                       # Créatif (port 25566)
+│   │   ├── server.properties
+│   │   ├── paper.yml
+│   │   ├── eula.txt
+│   │   ├── start.sh
+│   │   ├── start.bat
+│   │   └── plugins/
+│   │       └── luckperms/
+│   │           └── config.yml
+│   │
+│   └── minijeux/                      # Mini-Jeux (port 25567)
+│       ├── server.properties
+│       ├── paper.yml
+│       ├── eula.txt
+│       ├── start.sh
+│       ├── start.bat
+│       └── plugins/
+│           └── luckperms/
+│               └── config.yml
+│
+├── download_plugins.sh               # Télécharge les plugins (Linux/macOS)
+├── download_plugins.bat              # Télécharge les plugins (Windows)
+├── start_all.sh                       # Lance tous les serveurs (Linux/macOS)
+├── start_all.bat                      # Lance tous les serveurs (Windows)
+├── .gitignore                         # Exclut logs, mondes, plugins .jar
+└── README.md                          # Ce fichier
 ```
 
-## Prérequis
+---
 
-- **Java 17+** (recommandé : Java 21 pour les meilleures performances)
-  - [Télécharger Java (Oracle)](https://www.oracle.com/java/technologies/javase-jdk21-downloads.html)
+## 📌 Prérequis
+
+- **Java 17+** (recommandé : Java 21)
   - [Télécharger Java (Adoptium)](https://adoptium.net/)
-- **Velocity 3.3.0-SNAPSHOT** (ou version compatible avec Minecraft 1.20.6)
-- **Paper 1.20.6** (ou version compatible)
+- **Velocity 3.3.0-SNAPSHOT** (compatible Minecraft 1.20.6)
+  - [Télécharger Velocity](https://papermc.io/downloads#Velocity)
+- **Paper 1.20.6**
+  - [Télécharger Paper](https://papermc.io/downloads)
 
-## Installation
+---
+
+## 🚀 Installation
 
 ### 1. Télécharger les JARs
 
-- **Velocity** : Téléchargez la dernière version depuis [le site officiel](https://papermc.io/downloads#Velocity).
-  Placez le fichier `.jar` dans le dossier `velocity/` et renommez-le en `velocity.jar`.
-
-- **Paper** : Téléchargez la dernière version depuis [le site officiel](https://papermc.io/downloads).
-  Placez le fichier `.jar` dans chaque dossier des sous-serveurs (`servers/lobby/`, `servers/survie/`, `servers/creatif/`, `servers/minijeux/`) et renommez-les en `paper.jar`.
+- **Velocity** : Placez `velocity.jar` dans `velocity/`.
+- **Paper** : Placez `paper.jar` dans chaque dossier `servers/<nom>/`.
 
 ### 2. Accepter l'EULA
-
-Pour chaque sous-serveur, modifiez le fichier `eula.txt` et changez `eula=false` en `eula=true`.
+Modifiez `eula.txt` dans chaque sous-serveur :
+```diff
+- eula=false
++ eula=true
+```
 
 ### 3. Générer la clé de forwarding
-
-Exécutez la commande suivante pour générer une clé secrète pour le forwarding des informations des joueurs :
-
-#### Sur **Linux/macOS** :
 ```bash
+# Linux/macOS
 java -jar velocity/velocity.jar --generate-forwarding-secret
-```
 
-#### Sur **Windows** :
-```cmd
+# Windows
 java -jar velocity\velocity.jar --generate-forwarding-secret
 ```
-
-Copiez la clé générée et remplacez `votre_cle_secrete_ici` dans le fichier `velocity/forwarding.secret`.
+Copiez la clé dans `velocity/forwarding.secret`.
 
 ### 4. Configurer le forwarding dans Paper
-
-Pour chaque sous-serveur Paper, assurez-vous que les paramètres suivants sont dans `server.properties` :
-
+Dans `server.properties` de chaque sous-serveur :
 ```properties
 bungeecord: true
 online-mode: false
 ```
 
-> **Note** : Si vous utilisez `online-mode: true` dans Velocity, assurez-vous que `online-mode` est à `false` dans les sous-serveurs Paper pour éviter les conflits.
-
 ---
 
-## 🖥️ Lancement
+## 🎮 Lancement
 
-### Pour **Linux/macOS** :
-
-#### 1. Lancer les sous-serveurs Paper
-Ouvrez **4 terminaux séparés** et lancez chaque sous-serveur avec la commande suivante :
-
+### **Linux/macOS**
 ```bash
-# Pour le serveur Lobby
-cd servers/lobby
-./start.sh paper.jar
-
-# Pour le serveur Survie
-cd servers/survie
-./start.sh paper.jar
-
-# Pour le serveur Créatif
-cd servers/creatif
-./start.sh paper.jar
-
-# Pour le serveur Mini-Jeux
-cd servers/minijeux
-./start.sh paper.jar
-```
-
-#### 2. Lancer Velocity
-Ouvrez un **5ème terminal** et lancez Velocity :
-
-```bash
-cd velocity
-./start.sh velocity.jar
-```
-
-#### 3. Utiliser le script de lancement automatique
-Vous pouvez aussi lancer tous les serveurs en une seule commande :
-
-```bash
+# Lancer tous les serveurs
 ./start_all.sh
-```
-> *Utilisez `screen -r <nom>` pour accéder à la console d'un serveur (ex: `screen -r Lobby`).*
-> *Pour quitter un screen sans le fermer : `Ctrl+A` puis `D`.*
 
----
-
-### Pour **Windows** :
-
-#### 1. Lancer les sous-serveurs Paper
-Ouvrez **4 invites de commande (CMD) séparées** et lancez chaque sous-serveur avec la commande suivante :
-
-```cmd
-:: Pour le serveur Lobby
-cd servers\lobby
-start.bat paper.jar
-
-:: Pour le serveur Survie
-cd servers\survie
-start.bat paper.jar
-
-:: Pour le serveur Créatif
-cd servers\creatif
-start.bat paper.jar
-
-:: Pour le serveur Mini-Jeux
-cd servers\minijeux
-start.bat paper.jar
+# Ou lancer manuellement
+cd servers/lobby && ./start.sh paper.jar
+cd servers/survie && ./start.sh paper.jar
+# ... etc.
 ```
 
-#### 2. Lancer Velocity
-Ouvrez une **5ème invite de commande** et lancez Velocity :
-
+### **Windows**
 ```cmd
-cd velocity
-start.bat velocity.jar
-```
-
-#### 3. Utiliser le script de lancement automatique
-Vous pouvez aussi lancer tous les serveurs en une seule commande :
-
-```cmd
+:: Lancer tous les serveurs
 start_all.bat
+
+:: Ou lancer manuellement
+cd servers\lobby && start.bat paper.jar
+cd servers\survie && start.bat paper.jar
+:: ... etc.
 ```
-> *Chaque serveur s'ouvrira dans une **nouvelle fenêtre CMD**.*
-> *Pour fermer un serveur, fermez simplement sa fenêtre.*
 
 ---
 
-## Configuration des serveurs
+## 🔌 Plugins globaux
 
-### Velocity
+### 📋 **Liste des plugins installés**
 
-- **Port** : `25577` (configurable dans `velocity.toml`)
-- **MOTD** : `§6DevVanilla §8| §eVelocity Proxy`
-- **Serveur par défaut** : `lobby` (les nouveaux joueurs arrivent ici)
-- **Servers backend** : `lobby`, `survie`, `creatif`, `minijeux` (configurés dans `servers.json`)
+| Plugin | Type | Description | Lien |
+|--------|------|-------------|------|
+| **LuckPerms** | Velocity + Paper | Gestion globale des permissions (rangs, groupes). | [LuckPerms](https://luckperms.net/) |
+| **TabList** | Velocity | Tablist personnalisée et globale. | [TabList](https://github.com/Exceptionflug/TabList) |
+| **AdvancedBan** | Velocity | Bans inter-serveurs (via MySQL/Redis). | [AdvancedBan](https://github.com/Leako/AdvancedBan) |
+| **VelocityAuth** | Velocity | Authentification centralisée (login/register). | [VelocityAuth](https://github.com/Patbox/VelocityAuth) |
+| **RedisBungee** | Velocity | Synchronisation des données entre serveurs. | [RedisBungee](https://github.com/ImaginaryDevelopment/RedisBungee) |
+| **EssentialsX** | Paper (Lobby) | Commandes de base (`/warp`, `/spawn`, etc.). | [EssentialsX](https://essentialsx.net/) |
 
-### Sous-serveurs Paper
+---
 
-| Serveur    | Port  | Mode       | Difficulté | PvP  | Vol (Flight) | Type de monde       | Description                     |
-|------------|-------|------------|------------|------|--------------|---------------------|---------------------------------|
-| **Lobby**  | 25568 | Adventure  | Peaceful   | ❌   | ✅           | Flat (Lobby)        | Point d'entrée pour les joueurs |
-| **Survie** | 25565 | Survival   | Normal     | ✅   | ❌           | Default (Survie)    | Mode survie classique            |
-| **Créatif**| 25566 | Creative   | Peaceful   | ❌   | ✅           | Flat (Créatif)      | Mode créatif libre               |
-| **Mini-Jeux**|25567| Adventure  | Normal     | ✅   | ❌           | Default (Mini-Jeux) | Pour les jeux personnalisés      |
+### 📂 **Structure des plugins**
 
-## Personnalisation
-
-### Changer les ports
-
-- **Velocity** : Modifiez `bind` dans `velocity/velocity.toml`.
-- **Sous-serveurs** : Modifiez `server-port` dans `server.properties` de chaque sous-serveur.
-  N'oubliez pas de mettre à jour les adresses dans `velocity/servers.json`.
-
-### Changer les modes de jeu
-
-Modifiez `gamemode` dans `server.properties` de chaque sous-serveur :
-- `survival` : Mode Survie
-- `creative` : Mode Créatif
-- `adventure` : Mode Aventure
-- `spectator` : Mode Spectateur
-
-### Changer les types de monde
-
-Modifiez `level-type` dans `server.properties` :
-- `default` : Monde normal
-- `flat` : Monde plat
-- `large_biomes` : Biomes larges
-- `amplified` : Monde amplifié
-
-### Configurer le serveur par défaut
-
-Dans `velocity/velocity.toml`, modifiez la ligne :
-```toml
-default_server = "lobby"
+#### **Velocity** (`velocity/plugins/`)
+```
+velocity/plugins/
+├── luckperms/          # Gestion des permissions
+│   ├── config.yml     # Configuration principale
+│   └── luckperms.h2   # Base de données (H2)
+│
+├── tab-list/           # Tablist personnalisée
+│   └── config.json
+│
+├── advancedban/        # Bans inter-serveurs
+│   ├── config.yml
+│   └── advancedban/    # Base de données
+│
+├── velocityauth/       # Authentification
+│   ├── config.toml
+│   └── velocityauth/   # Base de données
+│
+└── redisbungee/        # Synchronisation Redis
+    └── config.yml
 ```
 
-### Configurer les serveurs de fallback
+#### **Lobby** (`servers/lobby/plugins/`)
+```
+servers/lobby/plugins/
+├── luckperms/          # Permissions (synchronisées avec Velocity)
+│   └── config.yml
+│
+└── essentials/         # Commandes de base
+    └── config.yml
+```
 
-Dans `velocity/servers.json`, vous pouvez ajouter un tableau `try` pour rediriger les joueurs si le serveur principal est indisponible :
+#### **Autres serveurs** (`servers/<nom>/plugins/`)
+```
+servers/<nom>/plugins/
+└── luckperms/          # Permissions (synchronisées avec Velocity)
+    └── config.yml
+```
+
+---
+
+### 🛠️ **Télécharger les plugins automatiquement**
+
+#### **Linux/macOS**
+```bash
+chmod +x download_plugins.sh
+./download_plugins.sh
+```
+
+#### **Windows**
+```cmd
+download_plugins.bat
+```
+
+> ⚠️ **Note** : Les liens de téléchargement dans les scripts pointent vers les dernières versions stables. Si un lien est obsolète, vérifiez les versions sur les sites officiels.
+
+---
+
+### ⚙️ **Configuration des plugins**
+
+#### **1. LuckPerms (Permissions globales)**
+
+- **Fichier** : `velocity/plugins/luckperms/config.yml`
+- **Fonction** : Gère les permissions pour tous les serveurs.
+
+**Exemple de configuration** :
+```yaml
+# Stockage (MySQL recommandé pour la synchronisation)
+storage:
+  method: h2  # ou mysql pour une base de données centrale
+  h2:
+    file: "{DIR}/luckperms.h2"
+
+# Synchronisation entre serveurs
+sync:
+  enabled: true
+  interval: 15  # Synchronisation toutes les 15 secondes
+
+# Groupes par défaut
+groups:
+  default:
+    permissions:
+      - "minecraft.command.help"
+      - "minecraft.command.list"
+    default: true
+  
+  vip:
+    permissions:
+      - "essentials.fly"
+      - "essentials.nick"
+    inheritance:
+      - default
+  
+  mod:
+    permissions:
+      - "minecraft.command.kick"
+      - "minecraft.command.ban"
+      - "luckperms.editor"
+    inheritance:
+      - vip
+  
+  admin:
+    permissions:
+      - "*"
+    inheritance:
+      - mod
+```
+
+**Commandes utiles** :
+| Commande | Description |
+|----------|-------------|
+| `/lp editor` | Ouvrir l'éditeur de permissions. |
+| `/lp group <nom> permission set <permission>` | Ajouter une permission à un groupe. |
+| `/lp user <joueur> group add <groupe>` | Ajouter un joueur à un groupe. |
+
+---
+
+#### **2. TabList (Tablist personnalisée)**
+
+- **Fichier** : `velocity/plugins/tab-list/config.json`
+- **Fonction** : Affiche une tablist personnalisée avec des informations globales.
+
+**Exemple de configuration** :
 ```json
-"lobby": {
-    "address": "127.0.0.1:25568",
-    "motd": "§6§lLobby §8| §eBienvenue sur DevVanilla!",
-    "restricted": false,
-    "maintenance": false,
-    "try": ["survie", "creatif"]
+{
+  "header": [
+    "",
+    "§6§lDevVanilla §8| §eBienvenue %player% !",
+    "§7Joueurs en ligne: §a%online%",
+    ""
+  ],
+  "footer": [
+    "",
+    "§7Serveur: §b%server%",
+    "§7Ping: §a%ping%ms",
+    "§7Date: §e%date%",
+    ""
+  ],
+  "tab-format": {
+    "default": "§7%prefix%%name% §8| §c%health%❤",
+    "vip": "§a%prefix%%name% §8| §c%health%❤",
+    "mod": "§2%prefix%%name% §8| §c%health%❤",
+    "admin": "§4%prefix%%name% §8| §c%health%❤"
+  },
+  "use-luckperms": true
 }
 ```
 
-## Ajouter des plugins
+**Placeholders disponibles** :
+- `%player%` : Nom du joueur.
+- `%online%` : Nombre de joueurs en ligne.
+- `%server%` : Nom du serveur actuel.
+- `%ping%` : Ping du joueur.
+- `%prefix%` : Préfixe du joueur (via LuckPerms).
+- `%health%` : Points de vie du joueur.
 
-### Plugins Velocity
+---
 
-Placez les plugins `.jar` dans le dossier `velocity/plugins/`.
+#### **3. AdvancedBan (Bans inter-serveurs)**
 
-#### Plugins recommandés pour Velocity :
-- **[LuckPerms](https://luckperms.net/)** : Gestion des permissions.
-- **[VelocityAuth](https://github.com/Patbox/VelocityAuth)** : Authentification avant de rejoindre un serveur.
-- **[ServerSwitcher](https://github.com/Patbox/ServerSwitcher)** : Permet aux joueurs de changer de serveur via des commandes.
+- **Fichier** : `velocity/plugins/advancedban/config.yml`
+- **Fonction** : Gère les bans, kicks, mutes et warnings de manière globale.
 
-### Plugins Paper
-
-Placez les plugins `.jar` dans le dossier `plugins/` de chaque sous-serveur.
-
-#### Plugins recommandés pour le Lobby :
-- **[EssentialsX](https://essentialsx.net/)** : Commandes de base (`/warp`, `/spawn`, etc.).
-- **[Multiverse-Core](https://www.spigotmc.org/resources/multiverse-core.390/)** : Gestion des mondes et téléportations.
-- **[TabList](https://www.spigotmc.org/resources/tab-list.57810/)** : Personnalisation de la tablist.
-
-#### Plugins recommandés pour Survie :
-- **[WorldEdit](https://dev.bukkit.org/projects/worldedit)** : Édition de monde.
-- **[WorldGuard](https://dev.bukkit.org/projects/worldguard)** : Protection des zones.
-- **[Dynmap](https://www.spigotmc.org/resources/dynmap.274/)** : Carte interactive.
-
-#### Plugins recommandés pour Créatif :
-- **[WorldEdit](https://dev.bukkit.org/projects/worldedit)** : Édition de monde.
-- **[WorldGuard](https://dev.bukkit.org/projects/worldguard)** : Protection des zones.
-- **[PlotSquared](https://www.spigotmc.org/resources/plotsquared.1177/)** : Gestion des parcelles.
-
-## Commandes utiles
-
-### Velocity
-
-| Commande | Description |
-|----------|-------------|
-| `/server lobby` | Envoyer un joueur sur le serveur Lobby |
-| `/server survie` | Envoyer un joueur sur le serveur Survie |
-| `/server creatif` | Envoyer un joueur sur le serveur Créatif |
-| `/server minijeux` | Envoyer un joueur sur le serveur Mini-Jeux |
-| `/list` | Lister les serveurs disponibles |
-
-### Paper (Lobby)
-
-| Commande | Description |
-|----------|-------------|
-| `/spawn` | Retourner au spawn |
-| `/warp <nom>` | Se téléporter à un warp |
-| `/setwarp <nom>` | Créer un warp |
-
-### Paper (Survie/Créatif/Mini-Jeux)
-
-| Commande | Description |
-|----------|-------------|
-| `/gamemode survival @a` | Passer tous les joueurs en mode Survie |
-| `/gamemode creative @a` | Passer tous les joueurs en mode Créatif |
-| `/time set day` | Passer à la journée |
-| `/weather clear` | Arrêter la pluie |
-
-## Exemple de configuration pour un plugin de téléportation
-
-Si vous utilisez **Multiverse-Core** ou **EssentialsX** dans le lobby, vous pouvez configurer des commandes pour envoyer les joueurs vers les autres serveurs :
-
-### Avec EssentialsX :
+**Exemple de configuration** :
 ```yaml
-# Dans config.yml d'EssentialsX
+# Stockage (MySQL recommandé pour les grands serveurs)
+database:
+  type: h2  # ou mysql
+  h2:
+    path: "{DIR}/advancedban"
+
+# Messages
+messages:
+  ban:
+    broadcast: "§c%player% a été banni par %operator% pour : %reason%"
+    notify: "§cVous avez été banni !\n§7Raison : %reason%\n§7Expire : %expire%"
+  
+  tempban:
+    broadcast: "§c%player% a été temporairement banni pour : %reason% (%duration%)"
+    notify: "§cBanni temporairement !\n§7Raison : %reason%\n§7Durée : %duration%"
+
+# Permissions
+permissions:
+  ban: "advancedban.ban"
+  tempban: "advancedban.tempban"
+  unban: "advancedban.unban"
+  kick: "advancedban.kick"
+  mute: "advancedban.mute"
+  warn: "advancedban.warn"
+```
+
+**Commandes utiles** :
+| Commande | Description |
+|----------|-------------|
+| `/ban <joueur> <raison>` | Bannir un joueur. |
+| `/tempban <joueur> <durée> <raison>` | Bannir temporairement un joueur. |
+| `/unban <joueur>` | Débannir un joueur. |
+| `/kick <joueur> <raison>` | Éjecter un joueur. |
+| `/mute <joueur> <raison>` | Muter un joueur. |
+| `/warn <joueur> <raison>` | Avertir un joueur. |
+| `/history <joueur>` | Voir l'historique des sanctions d'un joueur. |
+
+**Durées pour `/tempban`** :
+- `1s` : 1 seconde
+- `1m` : 1 minute
+- `1h` : 1 heure
+- `1d` : 1 jour
+- `1w` : 1 semaine
+- `1mo` : 1 mois
+- `1y` : 1 an
+- `perm` : Permanent
+
+---
+
+#### **4. VelocityAuth (Authentification)**
+
+- **Fichier** : `velocity/plugins/velocityauth/config.toml`
+- **Fonction** : Authentification centralisée avant de rejoindre un serveur.
+
+**Exemple de configuration** :
+```toml
+# Mode de fonctionnement
+# - NONE: Pas d'authentification
+# - REGISTER: Les joueurs doivent s'inscrire
+# - LOGIN: Les joueurs doivent se connecter (inscription désactivée)
+# - BOTH: Les joueurs peuvent s'inscrire ou se connecter
+mode = "BOTH"
+
+# Serveur de fallback (où les joueurs sont envoyés après l'authentification)
+fallback-server = "lobby"
+
+# Messages
+messages {
+    login {
+        success = "§aConnexion réussie ! Bienvenue, %player% !"
+        failure = "§cMot de passe incorrect !"
+    }
+    
+    register {
+        success = "§aInscription réussie ! Bienvenue, %player% !"
+        failure = "§cCe pseudo est déjà enregistré !"
+        password-too-short = "§cLe mot de passe doit contenir au moins 4 caractères !"
+    }
+}
+
+# Stockage
+database {
+    type = "h2"
+    h2 {
+        path = "{DIR}/velocityauth"
+    }
+}
+
+# Sécurité
+security {
+    hash-algorithm = "BCRYPT"
+    min-password-length = 4
+    prevent-multiple-logins = true
+    max-login-attempts = 5
+    tempban-duration = 300  # 5 minutes
+}
+```
+
+**Commandes utiles** :
+| Commande | Description |
+|----------|-------------|
+| `/login <motdepasse>` | Se connecter. |
+| `/register <motdepasse> <confirmation>` | S'inscrire. |
+| `/changepassword <ancien> <nouveau>` | Changer son mot de passe. |
+
+---
+
+#### **5. RedisBungee (Synchronisation)**
+
+- **Fichier** : `velocity/plugins/redisbungee/config.yml`
+- **Fonction** : Synchronise les données entre Velocity et les serveurs Paper (optionnel mais utile pour AdvancedBan et LuckPerms).
+
+**Exemple de configuration** :
+```yaml
+redis:
+  enabled: false  # Activez si vous utilisez Redis
+  host: "127.0.0.1"
+  port: 6379
+  password: ""  # Mot de passe Redis (laisser vide si aucun)
+  database: 0
+
+sync:
+  chat: true      # Synchroniser le chat
+  commands: true  # Synchroniser les commandes
+  permissions: true  # Synchroniser les permissions
+  bans: true      # Synchroniser les bans
+```
+
+> ⚠️ **Note** : Pour utiliser Redis, vous devez installer un serveur Redis. Vous pouvez le télécharger [ici](https://redis.io/download).
+
+---
+
+#### **6. EssentialsX (Lobby)**
+
+- **Fichier** : `servers/lobby/plugins/essentials/config.yml`
+- **Fonction** : Commandes de base pour le Lobby (`/warp`, `/spawn`, etc.).
+
+**Exemple de configuration** :
+```yaml
+# Coordonnées du spawn
+spawn:
+  x: 0
+  y: 64
+  z: 0
+  world: "world_lobby"
+
+# Warps vers les autres serveurs
 warps:
   survie:
     x: 0
     y: 64
     z: 0
-    world: world_lobby
+    world: "world_lobby"
     command: "server survie"
+  
   creatif:
     x: 0
     y: 64
     z: 0
-    world: world_lobby
+    world: "world_lobby"
     command: "server creatif"
+  
   minijeux:
     x: 0
     y: 64
     z: 0
-    world: world_lobby
+    world: "world_lobby"
     command: "server minijeux"
+
+# Activer le vol dans le Lobby
+fly:
+  enabled: true
+
+# Format du chat
+chat:
+  format: "§7[%prefix%§7] %player%: %message%"
 ```
 
-### Avec un plugin de panneau (ex: **ServerSelector**) :
-Vous pouvez créer un menu interactif dans le lobby pour permettre aux joueurs de choisir leur serveur.
+**Commandes utiles** :
+| Commande | Description |
+|----------|-------------|
+| `/spawn` | Retourner au spawn. |
+| `/warp <nom>` | Se téléporter à un warp. |
+| `/setwarp <nom>` | Créer un warp. |
+| `/fly` | Activer/désactiver le vol. |
+| `/list` | Lister les joueurs en ligne. |
 
-## Résolution des problèmes
+---
 
-### Erreur : "Cannot connect to server"
+### 🔧 **Synchronisation entre serveurs**
 
-- Vérifiez que les ports des sous-serveurs sont ouverts.
-- Vérifiez que les adresses dans `velocity/servers.json` sont correctes.
-- Assurez-vous que les sous-serveurs sont lancés **avant** Velocity.
+Pour que les **bans** et les **permissions** soient globaux, vous avez deux options :
 
-### Erreur : "Invalid session"
+#### **Option 1 : Utiliser MySQL (recommandé)**
+1. Installez un serveur MySQL (ex: [XAMPP](https://www.apachefriends.org/), [MariaDB](https://mariadb.org/)).
+2. Modifiez les fichiers de configuration de **LuckPerms** et **AdvancedBan** pour utiliser MySQL :
+   ```yaml
+   # Dans velocity/plugins/luckperms/config.yml
+   storage:
+     method: mysql
+     mysql:
+       address: "127.0.0.1:3306"
+       database: "luckperms"
+       username: "root"
+       password: "votre_mot_de_passe"
+   ```
+   ```yaml
+   # Dans velocity/plugins/advancedban/config.yml
+   database:
+     type: mysql
+     mysql:
+       host: "127.0.0.1"
+       port: 3306
+       database: "advancedban"
+       username: "root"
+       password: "votre_mot_de_passe"
+   ```
 
-- Vérifiez que `online-mode` est à `true` dans `velocity.toml`.
-- Vérifiez que `online-mode` est à `false` dans les sous-serveurs Paper.
-- Assurez-vous que la clé de forwarding est correcte dans `velocity/forwarding.secret`.
+#### **Option 2 : Utiliser Redis (plus rapide)**
+1. Installez un serveur Redis ([Télécharger Redis](https://redis.io/download)).
+2. Activez Redis dans **RedisBungee** et **AdvancedBan** :
+   ```yaml
+   # Dans velocity/plugins/redisbungee/config.yml
+   redis:
+     enabled: true
+     host: "127.0.0.1"
+     port: 6379
+   ```
+   ```yaml
+   # Dans velocity/plugins/advancedban/config.yml
+   redis:
+     enabled: true
+     host: "127.0.0.1"
+     port: 6379
+   ```
 
-### Erreur : "EULA not accepted"
+---
 
-- Modifiez `eula.txt` dans chaque sous-serveur et changez `eula=false` en `eula=true`.
+## 📜 Configuration des serveurs
 
-### Les joueurs ne sont pas redirigés vers le lobby
+### **Velocity**
+- **Port** : `25577`
+- **MOTD** : `§6DevVanilla §8| §eVelocity Proxy`
+- **Serveur par défaut** : `lobby`
+- **Servers backend** : `lobby`, `survie`, `creatif`, `minijeux`
 
-- Vérifiez que `default_server = "lobby"` est bien présent dans `velocity/velocity.toml`.
-- Vérifiez que le serveur `lobby` est bien configuré dans `velocity/servers.json`.
+### **Sous-serveurs Paper**
 
-### Sous Windows : "Java n'est pas reconnu"
+| Serveur    | Port  | Mode       | Difficulté | PvP  | Vol | Type de monde | Description |
+|------------|-------|------------|------------|------|-----|--------------|-------------|
+| **Lobby**  | 25568 | Adventure  | Peaceful   | ❌   | ✅  | Flat         | Point d'entrée |
+| **Survie** | 25565 | Survival   | Normal     | ✅   | ❌  | Default      | Mode survie |
+| **Créatif**| 25566 | Creative   | Peaceful   | ❌   | ✅  | Flat         | Mode créatif |
+| **Mini-Jeux**|25567| Adventure  | Normal     | ✅   | ❌  | Default      | Jeux personnalisés |
 
-- Assurez-vous que Java est installé et ajouté au **PATH**.
-- Vérifiez avec `java -version` dans une invite de commande.
-- Si Java n'est pas dans le PATH, utilisez le chemin complet :
-  ```cmd
-  "C:\Program Files\Java\jdk-21\bin\java" -jar velocity\velocity.jar
-  ```
+---
 
-### Sous Windows : "Le port est déjà utilisé"
+## 🎯 Commandes utiles
 
-- Vérifiez que aucun autre processus n'utilise le port avec :
-  ```cmd
-  netstat -ano | findstr :25577
-  ```
-- Si un processus utilise le port, arrêtez-le avec :
-  ```cmd
-  taskkill /PID <ID_DU_PROCESSUS> /F
-  ```
+### **Velocity**
+| Commande | Description |
+|----------|-------------|
+| `/server lobby` | Envoyer un joueur sur le Lobby. |
+| `/server survie` | Envoyer un joueur sur Survie. |
+| `/server creatif` | Envoyer un joueur sur Créatif. |
+| `/server minijeux` | Envoyer un joueur sur Mini-Jeux. |
+| `/list` | Lister les serveurs disponibles. |
 
-## Liens utiles
+### **AdvancedBan (Bans globaux)**
+| Commande | Description |
+|----------|-------------|
+| `/ban <joueur> <raison>` | Bannir un joueur. |
+| `/tempban <joueur> <durée> <raison>` | Bannir temporairement. |
+| `/unban <joueur>` | Débannir un joueur. |
+| `/kick <joueur> <raison>` | Éjecter un joueur. |
+| `/mute <joueur> <raison>` | Muter un joueur. |
+| `/warn <joueur> <raison>` | Avertir un joueur. |
 
-- [Velocity](https://papermc.io/downloads#Velocity)
-- [Paper](https://papermc.io/downloads)
+### **LuckPerms (Permissions)**
+| Commande | Description |
+|----------|-------------|
+| `/lp editor` | Ouvrir l'éditeur de permissions. |
+| `/lp group <nom> permission set <permission>` | Ajouter une permission. |
+| `/lp user <joueur> group add <groupe>` | Ajouter un joueur à un groupe. |
+
+### **VelocityAuth (Authentification)**
+| Commande | Description |
+|----------|-------------|
+| `/login <motdepasse>` | Se connecter. |
+| `/register <motdepasse> <confirmation>` | S'inscrire. |
+
+### **EssentialsX (Lobby)**
+| Commande | Description |
+|----------|-------------|
+| `/spawn` | Retourner au spawn. |
+| `/warp <nom>` | Se téléporter à un warp. |
+| `/setwarp <nom>` | Créer un warp. |
+| `/fly` | Activer/désactiver le vol. |
+
+---
+
+## ⚠️ Résolution des problèmes
+
+### **Problèmes avec les plugins**
+| Problème | Solution |
+|----------|----------|
+| **Plugin non chargé** | Vérifiez que le `.jar` est dans le bon dossier `plugins/`. |
+| **Erreur de dépendance** | Téléchargez les dépendances manquantes (ex: Vault pour EssentialsX). |
+| **Permissions non synchronisées** | Vérifiez que LuckPerms utilise la même base de données (MySQL/Redis) sur tous les serveurs. |
+| **Bans non globaux** | Vérifiez que AdvancedBan utilise MySQL ou Redis. |
+| **Authentification ne fonctionne pas** | Vérifiez que `fallback-server` est bien configuré dans VelocityAuth. |
+
+### **Problèmes avec Redis**
+| Problème | Solution |
+|----------|----------|
+| **Connexion refusée** | Vérifiez que Redis est lancé (`redis-server`). |
+| **Mot de passe incorrect** | Vérifiez le mot de passe dans `velocity/plugins/redisbungee/config.yml`. |
+| **Base de données non trouvée** | Vérifiez que la base de données Redis existe (par défaut : 0). |
+
+### **Problèmes avec MySQL**
+| Problème | Solution |
+|----------|----------|
+| **Connexion refusée** | Vérifiez que MySQL est lancé et que les identifiants sont corrects. |
+| **Base de données non trouvée** | Créez la base de données avec `CREATE DATABASE luckperms;` (ou `advancedban`). |
+| **Permissions insuffisantes** | Donnez les permissions à l'utilisateur MySQL : `GRANT ALL ON luckperms.* TO 'user'@'localhost';` |
+
+---
+
+## 🔗 Liens utiles
+
+### **Plugins**
+- [LuckPerms](https://luckperms.net/) (Permissions)
+- [TabList](https://github.com/Exceptionflug/TabList) (Tablist)
+- [AdvancedBan](https://github.com/Leako/AdvancedBan) (Bans globaux)
+- [VelocityAuth](https://github.com/Patbox/VelocityAuth) (Authentification)
+- [RedisBungee](https://github.com/ImaginaryDevelopment/RedisBungee) (Synchronisation)
+- [EssentialsX](https://essentialsx.net/) (Commandes de base)
+
+### **Outils**
+- [Redis](https://redis.io/download) (Base de données clé-valeur)
+- [MySQL](https://dev.mysql.com/downloads/) (Base de données relationnelle)
+- [XAMPP](https://www.apachefriends.org/) (Serveur MySQL local)
+- [Docker Redis](https://hub.docker.com/_/redis) (Redis en conteneur Docker)
+
+### **Documentation**
 - [Documentation Velocity](https://papermc.io/velocity/)
 - [Documentation Paper](https://papermc.io/paper/)
 - [SpigotMC (Plugins)](https://www.spigotmc.org/resources/)
-- [EssentialsX](https://essentialsx.net/)
-- [LuckPerms](https://luckperms.net/)

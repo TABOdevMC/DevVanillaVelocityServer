@@ -1,0 +1,105 @@
+# Configuration de VelocityAuth
+# Version: 2.0
+
+# Activer ou désactiver le plugin
+enabled = true
+
+# Mode de fonctionnement
+# - NONE: Pas d'authentification
+# - REGISTER: Les joueurs doivent s'inscrire
+# - LOGIN: Les joueurs doivent se connecter (inscription désactivée)
+# - BOTH: Les joueurs peuvent s'inscrire ou se connecter
+mode = "BOTH"
+
+# Serveur de fallback (où les joueurs sont envoyés après l'authentification)
+fallback-server = "lobby"
+
+# Messages
+messages {
+    # Messages de connexion
+    login {
+        success = "§aConnexion réussie ! Bienvenue, %player% !"
+        failure = "§cMot de passe incorrect !"
+        already-logged-in = "§cVous êtes déjà connecté !"
+    }
+    
+    # Messages d'inscription
+    register {
+        success = "§aInscription réussie ! Bienvenue, %player% !"
+        failure = "§cCe pseudo est déjà enregistré !"
+        password-too-short = "§cLe mot de passe doit contenir au moins 4 caractères !"
+        passwords-do-not-match = "§cLes mots de passe ne correspondent pas !"
+    }
+    
+    # Messages généraux
+    usage-login = "§cUtilisation : /login <motdepasse>"
+    usage-register = "§cUtilisation : /register <motdepasse> <confirmation>"
+    not-registered = "§cVous devez vous inscrire avec /register <motdepasse> <confirmation>"
+    not-logged-in = "§cVous devez vous connecter avec /login <motdepasse>"
+    
+    # Messages d'erreur
+    error = "§cUne erreur est survenue : %error%"
+}
+
+# Stockage des données
+database {
+    # Type : h2, mysql, mariadb
+    type = "h2"
+    
+    # Configuration pour H2
+    h2 {
+        path = "{DIR}/velocityauth"
+    }
+    
+    # Configuration pour MySQL
+    # mysql {
+    #     host = "127.0.0.1"
+    #     port = 3306
+    #     database = "velocityauth"
+    #     username = "root"
+    #     password = "votre_mot_de_passe"
+    # }
+}
+
+# Options de sécurité
+security {
+    # Chiffrement des mots de passe
+    hash-algorithm = "BCRYPT"
+    
+    # Longueur minimale du mot de passe
+    min-password-length = 4
+    
+    # Empêcher les joueurs de se connecter avec un pseudo déjà connecté
+    prevent-multiple-logins = true
+    
+    # Temps d'attente entre les tentatives de connexion (en secondes)
+    login-cooldown = 5
+    
+    # Nombre maximal de tentatives de connexion avant ban temporaire
+    max-login-attempts = 5
+    
+    # Durée du ban temporaire (en secondes)
+    tempban-duration = 300
+}
+
+# Options de session
+session {
+    # Durée de vie de la session (en secondes)
+    # 0 = session permanente jusqu'à déconnexion
+    timeout = 0
+    
+    # Activer les sessions IP (les joueurs restent connectés depuis la même IP)
+    ip-sessions = false
+}
+
+# Options de logging
+logging {
+    # Activer les logs des connexions
+    log-logins = true
+    
+    # Activer les logs des inscriptions
+    log-registers = true
+    
+    # Activer les logs des erreurs
+    log-errors = true
+}

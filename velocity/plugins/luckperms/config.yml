@@ -1,0 +1,107 @@
+# Configuration de LuckPerms pour Velocity
+# Version: 5.4
+
+# Stockage des données (MySQL recommandé pour la synchronisation entre serveurs)
+storage:
+  # Type de stockage : h2 (fichier), mysql, mariadb, postgresql, mongodb
+  method: h2
+  
+  # Configuration pour H2 (fichier local)
+  h2:
+    file: "{DIR}/luckperms.h2"
+  
+  # Configuration pour MySQL (désactiver si vous utilisez H2)
+  # mysql:
+  #   address: "127.0.0.1:3306"
+  #   database: "luckperms"
+  #   username: "root"
+  #   password: "votre_mot_de_passe"
+  #   use-ssl: false
+
+# Synchronisation entre serveurs (nécessaire pour les bans/permissions globaux)
+sync:
+  # Activer la synchronisation
+  enabled: true
+  
+  # Intervalle de synchronisation (en secondes)
+  interval: 15
+
+# Messaging service (pour la synchronisation entre Velocity et les serveurs Paper)
+messaging-service:
+  # Type : none, redis, rabbitmq, nats, kafka
+  type: none
+  
+  # Configuration pour Redis (recommandé pour la synchronisation entre serveurs)
+  # redis:
+  #   host: "127.0.0.1"
+  #   port: 6379
+  #   password: ""
+  #   database: 0
+
+# Permissions par défaut
+default-permissions:
+  - "minecraft.command.help"
+  - "minecraft.command.list"
+
+# Groupes par défaut
+groups:
+  default:
+    permissions:
+      - "minecraft.command.help"
+      - "minecraft.command.list"
+    inheritance: []
+    default: true
+  
+  vip:
+    permissions:
+      - "minecraft.command.tell"
+      - "minecraft.command.me"
+      - "essentials.fly"
+    inheritance:
+      - default
+    
+  mod:
+    permissions:
+      - "minecraft.command.kick"
+      - "minecraft.command.ban"
+      - "minecraft.command.op"
+      - "minecraft.command.deop"
+      - "luckperms.editor"
+    inheritance:
+      - vip
+      
+  admin:
+    permissions:
+      - "*"
+    inheritance:
+      - mod
+
+# Utilisateurs par défaut (exemples)
+users:
+  # Exemple pour un joueur VIP
+  # Steve:
+  #   permissions: []
+  #   groups:
+  #     - vip
+  
+  # Exemple pour un modérateur
+  # NotCH:
+  #   permissions: []
+  #   groups:
+  #     - mod
+
+# Options de logging
+logging:
+  # Activer les logs des commandes
+  log-permissions: true
+  
+  # Activer les logs des changements de groupe
+  log-group-changes: true
+
+# Options de performance
+performance:
+  # Activer le cache des permissions
+  cache-permissions: true
+  
+  # Durée de vie du cache (en secondes)
+  cache-lifetime: 300

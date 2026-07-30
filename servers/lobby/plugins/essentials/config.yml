@@ -1,0 +1,101 @@
+# Configuration d'EssentialsX pour le Lobby
+# Version: 2.20
+
+# Options générales
+enable-signs: true
+enable-books: true
+enable-command-logging: true
+
+# Options de téléportation
+teleport:
+  # Délai avant la téléportation (en secondes)
+  delay: 0
+  
+  # Cooldown entre les téléportations (en secondes)
+  cooldown: 0
+  
+  # Activer les messages de téléportation
+  announce: false
+
+# Options de spawn
+spawn:
+  # Coordonnées du spawn (laisser vide pour utiliser le spawn par défaut)
+  x: 0
+  y: 64
+  z: 0
+  
+  # Monde du spawn
+  world: "world_lobby"
+  
+  # Angle de rotation au spawn
+  yaw: 0
+  pitch: 0
+
+# Options de warp
+warps:
+  # Exemple de warp vers le serveur Survie
+  survie:
+    x: 0
+    y: 64
+    z: 0
+    world: "world_lobby"
+    command: "server survie"
+  
+  # Exemple de warp vers le serveur Créatif
+  creatif:
+    x: 0
+    y: 64
+    z: 0
+    world: "world_lobby"
+    command: "server creatif"
+  
+  # Exemple de warp vers le serveur Mini-Jeux
+  minijeux:
+    x: 0
+    y: 64
+    z: 0
+    world: "world_lobby"
+    command: "server minijeux"
+
+# Options de home
+homes:
+  # Nombre maximal de homes par joueur
+  max-homes: 3
+  
+  # Cooldown entre les téléportations vers un home (en secondes)
+  cooldown: 0
+
+# Options économiques (si vous utilisez Vault)
+economy:
+  # Devise utilisée
+  currency-symbol: "$"
+  
+  # Nom de la devise
+  currency-name: "Dollars"
+
+# Options de chat
+chat:
+  # Format du chat
+  format: "§7[%prefix%§7] %player%: %message%"
+  
+  # Radius du chat local (0 = global)
+  radius: 0
+
+# Options de protection
+protect:
+  # Empêcher les explosions
+  prevent-explosions: true
+  
+  # Empêcher les dégâts de feu
+  prevent-fire: true
+  
+  # Empêcher les dégâts de lave
+  prevent-lava: true
+
+# Options de vol
+fly:
+  # Activer le vol dans le Lobby
+  enabled: true
+  
+  # Cooldown entre les activations de vol (en secondes)
+  cooldown: 0

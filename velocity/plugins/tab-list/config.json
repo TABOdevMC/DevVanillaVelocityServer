@@ -1,0 +1,38 @@
+{
+  "enabled": true,
+  
+  "header": [
+    "",
+    "§6§lDevVanilla §8| §eBienvenue !",
+    "§7Joueurs en ligne: §a%online%",
+    ""
+  ],
+  
+  "footer": [
+    "",
+    "§7Serveur: §b%server%",
+    "§7Ping: §a%ping%ms",
+    "§7Date: §e%date%",
+    ""
+  ],
+  
+  "tab-format": {
+    "default": "§7%prefix%%name% §8| §c%health%❤",
+    "vip": "§a%prefix%%name% §8| §c%health%❤",
+    "mod": "§2%prefix%%name% §8| §c%health%❤",
+    "admin": "§4%prefix%%name% §8| §c%health%❤"
+  },
+  
+  "placeholders": {
+    "%online%": "{total_online}",
+    "%server%": "{server_name}",
+    "%ping%": "{ping}",
+    "%date%": "{date:dd/MM/yyyy}",
+    "%health%": "{health}",
+    "%prefix%": "{luckperms_prefix}"
+  },
+  
+  "sort-players-by": "PERMISSION",
+  "use-luckperms": true,
+  "update-interval": 1
+}

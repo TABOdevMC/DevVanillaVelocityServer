@@ -1,0 +1,65 @@
+# Configuration de LuckPerms pour le serveur Lobby
+# Synchronisation avec Velocity via Redis ou MySQL
+
+storage:
+  method: h2
+  h2:
+    file: "{DIR}/luckperms.h2"
+
+sync:
+  enabled: true
+  interval: 15
+
+messaging-service:
+  type: none
+
+# Permissions spécifiques au Lobby
+default-permissions:
+  - "minecraft.command.help"
+  - "minecraft.command.list"
+  - "essentials.spawn"
+  - "essentials.warp"
+  - "essentials.warps.*"
+
+groups:
+  default:
+    permissions:
+      - "minecraft.command.help"
+      - "minecraft.command.list"
+      - "essentials.spawn"
+      - "essentials.warp"
+      - "essentials.warps.*"
+    inheritance: []
+    default: true
+  
+  vip:
+    permissions:
+      - "essentials.fly"
+      - "essentials.nick"
+      - "essentials.nick.color"
+    inheritance:
+      - default
+    
+  mod:
+    permissions:
+      - "minecraft.command.kick"
+      - "minecraft.command.ban"
+      - "luckperms.editor"
+      - "essentials.mute"
+      - "essentials.unmute"
+    inheritance:
+      - vip
+      
+  admin:
+    permissions:
+      - "*"
+    inheritance:
+      - mod
+
+logging:
+  log-permissions: true
+  log-group-changes: true
+
+performance:
+  cache-permissions: true
+  cache-lifetime: 300
