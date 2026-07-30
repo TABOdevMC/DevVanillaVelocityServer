@@ -14,7 +14,8 @@ DevVanillaVelocityServer/
 │   ├── velocity.toml          # Configuration principale de Velocity
 │   ├── servers.json           # Liste des sous-serveurs backend
 │   ├── forwarding.secret      # Clé secrète pour le forwarding des infos joueurs
-│   ├── start.sh               # Script de lancement pour Velocity
+│   ├── start.sh               # Script de lancement pour Linux/macOS
+│   ├── start.bat              # Script de lancement pour Windows
 │   ├── plugins/               # Dossier pour les plugins Velocity
 │   └── logs/                  # Dossier pour les logs
 │
@@ -23,27 +24,32 @@ DevVanillaVelocityServer/
     │   ├── server.properties   # Configuration du serveur
     │   ├── paper.yml           # Optimisations Paper
     │   ├── eula.txt            # EULA Minecraft
-    │   └── start.sh            # Script de lancement
+    │   ├── start.sh            # Script de lancement pour Linux/macOS
+    │   └── start.bat           # Script de lancement pour Windows
     │
     ├── survie/                # Sous-serveur en mode Survie
     │   ├── server.properties
     │   ├── paper.yml
     │   ├── eula.txt
-    │   └── start.sh
+    │   ├── start.sh
+    │   └── start.bat
     │
     ├── creatif/               # Sous-serveur en mode Créatif
     │   ├── server.properties
     │   ├── paper.yml
     │   ├── eula.txt
-    │   └── start.sh
+    │   ├── start.sh
+    │   └── start.bat
     │
     └── minijeux/              # Sous-serveur pour les Mini-Jeux
         ├── server.properties
         ├── paper.yml
         ├── eula.txt
-        └── start.sh
+        ├── start.sh
+        └── start.bat
 
-├── start_all.sh               # Lance tous les serveurs en 1 commande
+├── start_all.sh               # Lance tous les serveurs en 1 commande (Linux/macOS)
+├── start_all.bat              # Lance tous les serveurs en 1 commande (Windows)
 ├── .gitignore                 # Exclut logs, mondes, etc.
 └── README.md                  # Ce fichier
 ```
@@ -51,6 +57,8 @@ DevVanillaVelocityServer/
 ## Prérequis
 
 - **Java 17+** (recommandé : Java 21 pour les meilleures performances)
+  - [Télécharger Java (Oracle)](https://www.oracle.com/java/technologies/javase-jdk21-downloads.html)
+  - [Télécharger Java (Adoptium)](https://adoptium.net/)
 - **Velocity 3.3.0-SNAPSHOT** (ou version compatible avec Minecraft 1.20.6)
 - **Paper 1.20.6** (ou version compatible)
 
@@ -72,8 +80,14 @@ Pour chaque sous-serveur, modifiez le fichier `eula.txt` et changez `eula=false`
 
 Exécutez la commande suivante pour générer une clé secrète pour le forwarding des informations des joueurs :
 
+#### Sur **Linux/macOS** :
 ```bash
-java -jar velocity.jar --generate-forwarding-secret
+java -jar velocity/velocity.jar --generate-forwarding-secret
+```
+
+#### Sur **Windows** :
+```cmd
+java -jar velocity\velocity.jar --generate-forwarding-secret
 ```
 
 Copiez la clé générée et remplacez `votre_cle_secrete_ici` dans le fichier `velocity/forwarding.secret`.
@@ -89,10 +103,13 @@ online-mode: false
 
 > **Note** : Si vous utilisez `online-mode: true` dans Velocity, assurez-vous que `online-mode` est à `false` dans les sous-serveurs Paper pour éviter les conflits.
 
-## Lancement
+---
 
-### 1. Lancer les sous-serveurs Paper
+## 🖥️ Lancement
 
+### Pour **Linux/macOS** :
+
+#### 1. Lancer les sous-serveurs Paper
 Ouvrez **4 terminaux séparés** et lancez chaque sous-serveur avec la commande suivante :
 
 ```bash
@@ -113,8 +130,7 @@ cd servers/minijeux
 ./start.sh paper.jar
 ```
 
-### 2. Lancer Velocity
-
+#### 2. Lancer Velocity
 Ouvrez un **5ème terminal** et lancez Velocity :
 
 ```bash
@@ -122,16 +138,58 @@ cd velocity
 ./start.sh velocity.jar
 ```
 
-### 3. Utiliser le script de lancement automatique
-
+#### 3. Utiliser le script de lancement automatique
 Vous pouvez aussi lancer tous les serveurs en une seule commande :
 
 ```bash
 ./start_all.sh
 ```
-
 > *Utilisez `screen -r <nom>` pour accéder à la console d'un serveur (ex: `screen -r Lobby`).*
 > *Pour quitter un screen sans le fermer : `Ctrl+A` puis `D`.*
+
+---
+
+### Pour **Windows** :
+
+#### 1. Lancer les sous-serveurs Paper
+Ouvrez **4 invites de commande (CMD) séparées** et lancez chaque sous-serveur avec la commande suivante :
+
+```cmd
+:: Pour le serveur Lobby
+cd servers\lobby
+start.bat paper.jar
+
+:: Pour le serveur Survie
+cd servers\survie
+start.bat paper.jar
+
+:: Pour le serveur Créatif
+cd servers\creatif
+start.bat paper.jar
+
+:: Pour le serveur Mini-Jeux
+cd servers\minijeux
+start.bat paper.jar
+```
+
+#### 2. Lancer Velocity
+Ouvrez une **5ème invite de commande** et lancez Velocity :
+
+```cmd
+cd velocity
+start.bat velocity.jar
+```
+
+#### 3. Utiliser le script de lancement automatique
+Vous pouvez aussi lancer tous les serveurs en une seule commande :
+
+```cmd
+start_all.bat
+```
+> *Chaque serveur s'ouvrira dans une **nouvelle fenêtre CMD**.*
+> *Pour fermer un serveur, fermez simplement sa fenêtre.*
+
+---
 
 ## Configuration des serveurs
 
@@ -307,6 +365,26 @@ Vous pouvez créer un menu interactif dans le lobby pour permettre aux joueurs d
 
 - Vérifiez que `default_server = "lobby"` est bien présent dans `velocity/velocity.toml`.
 - Vérifiez que le serveur `lobby` est bien configuré dans `velocity/servers.json`.
+
+### Sous Windows : "Java n'est pas reconnu"
+
+- Assurez-vous que Java est installé et ajouté au **PATH**.
+- Vérifiez avec `java -version` dans une invite de commande.
+- Si Java n'est pas dans le PATH, utilisez le chemin complet :
+  ```cmd
+  "C:\Program Files\Java\jdk-21\bin\java" -jar velocity\velocity.jar
+  ```
+
+### Sous Windows : "Le port est déjà utilisé"
+
+- Vérifiez que aucun autre processus n'utilise le port avec :
+  ```cmd
+  netstat -ano | findstr :25577
+  ```
+- Si un processus utilise le port, arrêtez-le avec :
+  ```cmd
+  taskkill /PID <ID_DU_PROCESSUS> /F
+  ```
 
 ## Liens utiles
 
